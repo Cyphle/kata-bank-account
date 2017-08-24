@@ -18,15 +18,15 @@ class Account {
     return currentBalance.getAmount();
   }
 
-  void deposit(Money amount) throws NegativeAmountNotAllowException {
+  void deposit(Money amount) throws NegativeAmountNotAllowedException {
     if (amount.isNegative())
-      throw new NegativeAmountNotAllowException();
+      throw new NegativeAmountNotAllowedException();
     currentBalance = currentBalance.add(amount);
   }
 
-  Money withdraw(Money amount) throws AllowedOverdraftExceededException, NegativeAmountNotAllowException {
+  Money withdraw(Money amount) throws AllowedOverdraftExceededException, NegativeAmountNotAllowedException {
     if (amount.isNegative())
-      throw new NegativeAmountNotAllowException();
+      throw new NegativeAmountNotAllowedException();
 
     if (currentBalance.minus(amount).isBelow(MAXIMUM_OVERDRAFT))
       throw new AllowedOverdraftExceededException();

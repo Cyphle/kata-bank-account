@@ -41,7 +41,7 @@ public class AccountTest {
     assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(300, DECIMAL_64));
   }
 
-  @Test(expected = NegativeAmountNotAllowException.class)
+  @Test(expected = NegativeAmountNotAllowedException.class)
   public void should_not_be_possible_to_add_a_negative_deposit() throws Exception {
     account.deposit(money.of(-100));
   }
@@ -58,7 +58,7 @@ public class AccountTest {
     account.withdraw(money.of(401));
   }
 
-  @Test(expected = NegativeAmountNotAllowException.class)
+  @Test(expected = NegativeAmountNotAllowedException.class)
   public void should_not_allow_withdrawal_of_negative_amount() throws Exception {
     account.withdraw(money.of(-100));
   }
