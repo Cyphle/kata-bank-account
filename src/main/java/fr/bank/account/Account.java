@@ -6,12 +6,11 @@ import java.math.MathContext;
 import static fr.bank.account.MoneyBuilder.money;
 
 class Account {
-  private static final MathContext DECIMAL_64 = MathContext.DECIMAL64;
   private static final Money MAXIMUM_OVERDRAFT = money.of(-400);
   private Money currentBalance;
 
   public Account() {
-    currentBalance = money.of(new BigDecimal(0, DECIMAL_64));
+    currentBalance = money.of(new BigDecimal(0, MathContext.DECIMAL64));
   }
 
   BigDecimal getCurrentBalance() {
@@ -21,6 +20,7 @@ class Account {
   void deposit(Money amountToDeposit) throws NegativeAmountNotAllowedException {
     if (amountToDeposit.isNegative())
       throw new NegativeAmountNotAllowedException();
+
     currentBalance = currentBalance.add(amountToDeposit);
   }
 
