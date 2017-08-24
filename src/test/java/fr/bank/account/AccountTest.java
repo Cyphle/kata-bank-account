@@ -29,26 +29,26 @@ public class AccountTest {
   }
 
   @Test
-  public void should_have_amount_when_making_a_deposit() throws Exception {
-    account.deposit(new BigDecimal(100, DECIMAL_64));
+  public void should_have_when_making_a_deposit_with_money() throws Exception {
+    account.deposit(money.of(100));
     assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(100, DECIMAL_64));
   }
 
   @Test
   public void should_have_total_deposit_when_making_multiple_deposits() throws Exception {
-    account.deposit(new BigDecimal(100, DECIMAL_64));
-    account.deposit(new BigDecimal(200, DECIMAL_64));
+    account.deposit(money.of(100));
+    account.deposit(money.of(200));
     assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(300, DECIMAL_64));
   }
 
   @Test(expected = NegativeAmountNotAllowException.class)
   public void should_not_be_possible_to_add_a_negative_deposit() throws Exception {
-    account.deposit(new BigDecimal(-100, DECIMAL_64));
+    account.deposit(money.of(-100));
   }
 
   @Test
   public void should_have_amount_when_withdrawal_is_made() throws Exception {
-    account.deposit(new BigDecimal(100, DECIMAL_64));
+    account.deposit(money.of(100));
     assertThat(account.withdraw(new BigDecimal(50, DECIMAL_64))).isEqualTo(money.of(new BigDecimal(50, DECIMAL_64)));
     assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(50, DECIMAL_64));
   }

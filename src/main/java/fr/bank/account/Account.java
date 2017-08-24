@@ -17,10 +17,10 @@ public class Account {
     return currentBalance.getAmount();
   }
 
-  public void deposit(BigDecimal amount) throws NegativeAmountNotAllowException {
-    if (amount.compareTo(new BigDecimal(0, DECIMAL_64)) < 0)
+  public void deposit(Money amount) throws NegativeAmountNotAllowException {
+    if (amount.isNegative())
       throw new NegativeAmountNotAllowException();
-    currentBalance = currentBalance.add(money.of(amount));
+    currentBalance = currentBalance.add(amount);
   }
 
   public Money withdraw(BigDecimal amount) {

@@ -1,6 +1,7 @@
 package fr.bank.account;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 import static fr.bank.account.MoneyBuilder.money;
 
@@ -21,6 +22,10 @@ public class Money {
 
   public Money minus(Money amount) {
     return money.of(this.amount.subtract(amount.getAmount()));
+  }
+
+  public boolean isNegative() {
+    return amount.compareTo(new BigDecimal(0, MathContext.DECIMAL64)) < 0;
   }
 
   @Override
