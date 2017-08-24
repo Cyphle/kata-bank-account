@@ -1,12 +1,11 @@
 package fr.bank.account;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class AccountTest {
     /*
@@ -19,5 +18,12 @@ public class AccountTest {
   public void should_have_zero_if_no_deposit_has_been_made() throws Exception {
     Account account = new Account();
     assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(0, MathContext.DECIMAL64));
+  }
+
+  @Test
+  public void should_have_amount_when_making_a_deposit() throws Exception {
+    Account account = new Account();
+    account.deposit(new BigDecimal(100));
+    assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(100, MathContext.DECIMAL64));
   }
 }
