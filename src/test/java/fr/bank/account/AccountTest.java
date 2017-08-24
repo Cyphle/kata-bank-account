@@ -38,4 +38,9 @@ public class AccountTest {
     account.deposit(new BigDecimal(200, MathContext.DECIMAL64));
     assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(300, MathContext.DECIMAL64));
   }
+
+  @Test(expected = NegativeAmountNotAllowException.class)
+  public void should_not_be_possible_to_add_a_negative_deposit() throws Exception {
+    account.deposit(new BigDecimal(-100, MathContext.DECIMAL64));
+  }
 }
