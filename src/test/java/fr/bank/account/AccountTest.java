@@ -12,11 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AccountTest {
   private static final MathContext DECIMAL_64 = MathContext.DECIMAL64;
   private Account account;
-  /*
-    - As a bank client
-    - I want to make a withdrawal from my account
-    - In order to retrieve some or all of my savings
-     */
 
   @Before
   public void setUp() throws Exception {
