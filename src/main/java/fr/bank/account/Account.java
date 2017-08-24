@@ -23,9 +23,8 @@ public class Account {
     currentBalance = currentBalance.add(amount);
   }
 
-  public Money withdraw(BigDecimal amount) {
-    Money withdrawal = money.of(amount);
-    currentBalance = currentBalance.minus(withdrawal);
-    return withdrawal;
+  public Money withdraw(Money amount) {
+    currentBalance = currentBalance.minus(amount);
+    return amount;
   }
 }

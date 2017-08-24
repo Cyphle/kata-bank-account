@@ -47,9 +47,9 @@ public class AccountTest {
   }
 
   @Test
-  public void should_have_amount_when_withdrawal_is_made() throws Exception {
+  public void should_have_amount_when_withdrawal_is_made_of_amount_money() throws Exception {
     account.deposit(money.of(100));
-    assertThat(account.withdraw(new BigDecimal(50, DECIMAL_64))).isEqualTo(money.of(new BigDecimal(50, DECIMAL_64)));
+    assertThat(account.withdraw(money.of(50))).isEqualTo(money.of(new BigDecimal(50, DECIMAL_64)));
     assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(50, DECIMAL_64));
   }
 }
