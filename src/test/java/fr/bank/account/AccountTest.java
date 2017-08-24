@@ -10,7 +10,7 @@ import static fr.bank.account.MoneyBuilder.money;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AccountTest {
-  public static final MathContext DECIMAL_64 = MathContext.DECIMAL64;
+  private static final MathContext DECIMAL_64 = MathContext.DECIMAL64;
   private Account account;
   /*
     - As a bank client
@@ -51,5 +51,10 @@ public class AccountTest {
     account.deposit(money.of(100));
     assertThat(account.withdraw(money.of(50))).isEqualTo(money.of(new BigDecimal(50, DECIMAL_64)));
     assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(50, DECIMAL_64));
+  }
+
+  @Test(expected = AllowedOverdraftExceededException.class)
+  public void should_not_withdraw_when_overdraft_is_exceeded() throws Exception {
+    account.withdraw(money.of(401));
   }
 }

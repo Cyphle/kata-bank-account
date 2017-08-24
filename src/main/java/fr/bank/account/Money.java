@@ -6,7 +6,7 @@ import java.math.MathContext;
 import static fr.bank.account.MoneyBuilder.money;
 
 public class Money {
-  private BigDecimal amount;
+  private final BigDecimal amount;
 
   Money(BigDecimal amount) {
     this.amount = amount;
@@ -26,6 +26,10 @@ public class Money {
 
   public boolean isNegative() {
     return amount.compareTo(new BigDecimal(0, MathContext.DECIMAL64)) < 0;
+  }
+
+  public boolean isBelow(Money amount) {
+    return this.amount.compareTo(amount.getAmount()) < 0;
   }
 
   @Override
