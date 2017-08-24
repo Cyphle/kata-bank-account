@@ -57,4 +57,9 @@ public class AccountTest {
   public void should_not_withdraw_when_overdraft_is_exceeded() throws Exception {
     account.withdraw(money.of(401));
   }
+
+  @Test(expected = NegativeAmountNotAllowException.class)
+  public void should_not_allow_withdrawal_of_negative_amount() throws Exception {
+    account.withdraw(money.of(-100));
+  }
 }

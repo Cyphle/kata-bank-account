@@ -24,9 +24,13 @@ class Account {
     currentBalance = currentBalance.add(amount);
   }
 
-  Money withdraw(Money amount) throws AllowedOverdraftExceededException {
+  Money withdraw(Money amount) throws AllowedOverdraftExceededException, NegativeAmountNotAllowException {
+    if (amount.isNegative())
+      throw new NegativeAmountNotAllowException();
+
     if (currentBalance.minus(amount).isBelow(MAXIMUM_OVERDRAFT))
       throw new AllowedOverdraftExceededException();
+
     currentBalance = currentBalance.minus(amount);
     return amount;
   }
