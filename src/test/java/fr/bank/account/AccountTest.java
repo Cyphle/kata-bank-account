@@ -28,6 +28,11 @@ public class AccountTest {
   }
 
   @Test
+  public void should_have_amount_of_zero_when_no_deposit_has_been_made() throws Exception {
+    assertThat(account.getBalance()).isEqualTo(new BigDecimal(0, MathContext.DECIMAL64));
+  }
+
+  @Test
   public void should_have_amount_when_making_a_deposit() throws Exception {
     account.deposit(new BigDecimal(100, MathContext.DECIMAL64));
     assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(100, MathContext.DECIMAL64));
