@@ -6,7 +6,7 @@ public class MoneyBuilder {
   public static MoneyBuilder money = new MoneyBuilder();
   private BigDecimal amount;
 
-  public MoneyBuilder withAmount(BigDecimal amount) {
+  public MoneyBuilder of(BigDecimal amount) {
     this.amount = amount;
     return this;
   }

@@ -6,23 +6,17 @@ import java.math.MathContext;
 import static fr.bank.account.MoneyBuilder.money;
 
 public class Account {
-  private BigDecimal currentBalanceDecimal;
   private Money currentBalance;
 
   public Account() {
-    currentBalanceDecimal = new BigDecimal(0, MathContext.DECIMAL64);
-    currentBalance = money.withAmount(new BigDecimal(0, MathContext.DECIMAL64)).build();
+    currentBalance = money.of(new BigDecimal(0, MathContext.DECIMAL64)).build();
   }
 
   public BigDecimal getCurrentBalance() {
-    return currentBalanceDecimal;
+    return currentBalance.getAmount();
   }
 
   public void deposit(BigDecimal amount) {
-    currentBalanceDecimal = currentBalanceDecimal.add(amount);
-  }
-
-  public BigDecimal getBalance() {
-    return currentBalance.getAmount();
+    currentBalance = currentBalance.add(money.of(amount).build());
   }
 }

@@ -2,6 +2,8 @@ package fr.bank.account;
 
 import java.math.BigDecimal;
 
+import static fr.bank.account.MoneyBuilder.money;
+
 public class Money {
   private BigDecimal amount;
 
@@ -11,5 +13,9 @@ public class Money {
 
   public BigDecimal getAmount() {
     return amount;
+  }
+
+  public Money add(Money amount) {
+    return money.of(this.amount.add(amount.getAmount())).build();
   }
 }
