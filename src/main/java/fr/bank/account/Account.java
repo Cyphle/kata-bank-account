@@ -22,4 +22,10 @@ public class Account {
       throw new NegativeAmountNotAllowException();
     currentBalance = currentBalance.add(money.of(amount));
   }
+
+  public Money withdraw(BigDecimal amount) {
+    Money withdrawal = money.of(amount);
+    currentBalance = currentBalance.minus(withdrawal);
+    return withdrawal;
+  }
 }
