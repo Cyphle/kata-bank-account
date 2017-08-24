@@ -16,6 +16,6 @@ public class Money {
   }
 
   public Money add(Money amount) {
-    return money.of(this.amount.add(amount.getAmount())).build();
+    return money.of(this.amount.add(amount.getAmount()));
   }
 }

@@ -9,7 +9,7 @@ public class Account {
   private Money currentBalance;
 
   public Account() {
-    currentBalance = money.of(new BigDecimal(0, MathContext.DECIMAL64)).build();
+    currentBalance = money.of(new BigDecimal(0, MathContext.DECIMAL64));
   }
 
   public BigDecimal getCurrentBalance() {
@@ -17,6 +17,6 @@ public class Account {
   }
 
   public void deposit(BigDecimal amount) {
-    currentBalance = currentBalance.add(money.of(amount).build());
+    currentBalance = currentBalance.add(money.of(amount));
   }
 }
