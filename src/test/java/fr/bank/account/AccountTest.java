@@ -10,13 +10,8 @@ import static fr.bank.account.MoneyBuilder.money;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AccountTest {
-  public static final MathContext DECIMAL_64 = MathContext.DECIMAL64;
+  private static final MathContext DECIMAL_64 = MathContext.DECIMAL64;
   private Account account;
-  /*
-    - As a bank client
-    - I want to make a withdrawal from my account
-    - In order to retrieve some or all of my savings
-     */
 
   @Before
   public void setUp() throws Exception {
@@ -41,7 +36,7 @@ public class AccountTest {
     assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(300, DECIMAL_64));
   }
 
-  @Test(expected = NegativeAmountNotAllowException.class)
+  @Test(expected = NegativeAmountNotAllowedException.class)
   public void should_not_be_possible_to_add_a_negative_deposit() throws Exception {
     account.deposit(money.of(-100));
   }
@@ -51,5 +46,15 @@ public class AccountTest {
     account.deposit(money.of(100));
     assertThat(account.withdraw(money.of(50))).isEqualTo(money.of(new BigDecimal(50, DECIMAL_64)));
     assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(50, DECIMAL_64));
+  }
+
+  @Test(expected = AllowedOverdraftExceededException.class)
+  public void should_not_withdraw_when_overdraft_is_exceeded() throws Exception {
+    account.withdraw(money.of(401));
+  }
+
+  @Test(expected = NegativeAmountNotAllowedException.class)
+  public void should_not_allow_withdrawal_of_negative_amount() throws Exception {
+    account.withdraw(money.of(-100));
   }
 }
