@@ -1,8 +1,10 @@
-package fr.bank.account;
+package fr.bank.domain.account;
 
-import fr.bank.account.exceptions.AllowedOverdraftExceededException;
-import fr.bank.account.exceptions.NegativeAmountNotAllowedException;
-import fr.bank.date.DateService;
+import fr.bank.domain.account.Account;
+import fr.bank.domain.account.Statement;
+import fr.bank.domain.account.exceptions.AllowedOverdraftExceededException;
+import fr.bank.domain.account.exceptions.NegativeAmountNotAllowedException;
+import fr.bank.domain.date.DateService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,12 +14,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.math.MathContext;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
-import static fr.bank.account.Money.money;
-import static fr.bank.account.Operation.operation;
-import static fr.bank.account.StatementEntry.statementEntry;
+import static fr.bank.domain.account.Money.money;
+import static fr.bank.domain.account.Operation.operation;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 

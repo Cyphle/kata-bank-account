@@ -1,15 +1,18 @@
-package fr.bank.account;
+package fr.bank.domain.account;
 
-import fr.bank.date.BankDateService;
-import fr.bank.date.DateService;
+import fr.bank.domain.account.BankStatement;
+import fr.bank.domain.account.Operation;
+import fr.bank.domain.date.BankDateService;
+import fr.bank.domain.date.DateService;
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
 
-import static fr.bank.account.Money.money;
-import static fr.bank.account.Operation.operation;
-import static fr.bank.account.StatementEntry.statementEntry;
+import static fr.bank.domain.account.Money.money;
+import static fr.bank.domain.account.Operation.operation;
+import static fr.bank.domain.account.StatementEntry.statementEntry;
 import static org.assertj.core.api.Assertions.*;
 
 public class BankStatementTest {

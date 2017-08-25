@@ -1,4 +1,4 @@
-package fr.bank.account;
+package fr.bank.domain.account;
 
 public class StatementEntry {
   public static final StatementEntryBuilder statementEntry = new StatementEntryBuilder();

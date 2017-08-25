@@ -1,4 +1,4 @@
-package fr.bank.account;
+package fr.bank.domain.account;
 
 public interface AccountVisitor {
   void visit(Account account);

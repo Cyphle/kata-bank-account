@@ -1,4 +1,4 @@
-package fr.bank.date;
+package fr.bank.domain.date;
 
 import java.time.LocalDate;
 

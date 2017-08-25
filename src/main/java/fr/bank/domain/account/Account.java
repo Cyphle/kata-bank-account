@@ -1,13 +1,13 @@
-package fr.bank.account;
+package fr.bank.domain.account;
 
-import fr.bank.account.exceptions.AllowedOverdraftExceededException;
-import fr.bank.account.exceptions.NegativeAmountNotAllowedException;
-import fr.bank.date.DateService;
+import fr.bank.domain.account.exceptions.AllowedOverdraftExceededException;
+import fr.bank.domain.account.exceptions.NegativeAmountNotAllowedException;
+import fr.bank.domain.date.DateService;
 
 import java.math.BigDecimal;
 
-import static fr.bank.account.Money.money;
-import static fr.bank.account.Operation.operation;
+import static fr.bank.domain.account.Money.money;
+import static fr.bank.domain.account.Operation.operation;
 
 class Account {
   private static final Money MAXIMUM_OVERDRAFT = money.of(-400);

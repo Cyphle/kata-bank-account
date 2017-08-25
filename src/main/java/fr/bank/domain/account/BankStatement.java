@@ -1,10 +1,10 @@
-package fr.bank.account;
+package fr.bank.domain.account;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static fr.bank.account.StatementEntry.statementEntry;
+import static fr.bank.domain.account.StatementEntry.statementEntry;
 
 public class BankStatement implements Statement {
   public List<StatementEntry> statements;
