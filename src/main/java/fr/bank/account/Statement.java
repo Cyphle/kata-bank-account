@@ -6,4 +6,6 @@ public interface Statement {
   void registerStatement(Operation operation, Money balanceOfAccountAfterOperation);
 
   List<StatementEntry> getStatementEntries();
+
+  void accept(AccountVisitor visitor);
 }

@@ -28,6 +28,11 @@ public class StatementEntry {
     return result;
   }
 
+  public void accept(AccountVisitor visitor) {
+    operation.accept(visitor);
+    visitor.visit(this);
+  }
+
   static class StatementEntryBuilder {
     private Operation operation;
     private Money balanceOfAccountAfterOperation;

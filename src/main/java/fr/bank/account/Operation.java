@@ -12,6 +12,10 @@ public class Operation {
     this.amount = amount;
   }
 
+  public void accept(AccountVisitor visitor) {
+    visitor.visit(this);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

@@ -52,4 +52,9 @@ class Account {
             currentBalance);
     return amountToWithdraw;
   }
+
+  public void accept(AccountVisitor visitor) {
+    statement.accept(visitor);
+    visitor.visit(this);
+  }
 }

@@ -22,4 +22,11 @@ public class BankStatement implements Statement {
   public void registerStatement(Operation operation, Money balanceOfAccountAfterOperation) {
     statements.add(statementEntry.ofOperation(operation).withAccountBalanceAfter(balanceOfAccountAfterOperation).create());
   }
+
+  @Override
+  public void accept(AccountVisitor visitor) {
+    for (StatementEntry entry : statements)
+      entry.accept(visitor);
+    visitor.visit(this);
+  }
 }
