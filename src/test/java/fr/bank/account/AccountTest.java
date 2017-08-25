@@ -1,5 +1,7 @@
 package fr.bank.account;
 
+import fr.bank.account.exceptions.AllowedOverdraftExceededException;
+import fr.bank.account.exceptions.NegativeAmountNotAllowedException;
 import org.junit.Before;
 import org.junit.Test;
 

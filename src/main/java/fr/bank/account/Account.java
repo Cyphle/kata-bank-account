@@ -1,5 +1,8 @@
 package fr.bank.account;
 
+import fr.bank.account.exceptions.AllowedOverdraftExceededException;
+import fr.bank.account.exceptions.NegativeAmountNotAllowedException;
+
 import java.math.BigDecimal;
 
 import static fr.bank.account.Money.money;
