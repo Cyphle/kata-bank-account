@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-import static fr.bank.account.MoneyBuilder.money;
+import static fr.bank.account.Money.money;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AccountTest {
@@ -50,7 +50,7 @@ public class AccountTest {
   @Test
   public void should_have_amount_of_money_when_withdrawal_of_amount_is_done() throws Exception {
     account.deposit(money.of(100));
-    assertThat(account.withdraw(money.of(50))).isEqualTo(money.of(new BigDecimal(50, DECIMAL_64)));
+    assertThat(account.withdraw(money.of(50))).isEqualTo(money.of(50));
     assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(50, DECIMAL_64));
   }
 

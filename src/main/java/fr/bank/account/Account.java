@@ -1,16 +1,15 @@
 package fr.bank.account;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 
-import static fr.bank.account.MoneyBuilder.money;
+import static fr.bank.account.Money.money;
 
 class Account {
   private static final Money MAXIMUM_OVERDRAFT = money.of(-400);
   private Money currentBalance;
 
   public Account() {
-    currentBalance = money.of(new BigDecimal(0, MathContext.DECIMAL64));
+    currentBalance = money.of(0);
   }
 
   BigDecimal getCurrentBalance() {

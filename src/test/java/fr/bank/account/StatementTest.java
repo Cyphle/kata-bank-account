@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 
-import static fr.bank.account.MoneyBuilder.money;
+import static fr.bank.account.Money.money;
 import static org.assertj.core.api.Assertions.*;
 
 public class StatementTest {

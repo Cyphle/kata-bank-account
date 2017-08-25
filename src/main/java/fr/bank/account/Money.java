@@ -3,9 +3,8 @@ package fr.bank.account;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-import static fr.bank.account.MoneyBuilder.money;
-
 public class Money {
+  public static final MoneyBuilder money = new MoneyBuilder();
   private final BigDecimal amount;
 
   Money(BigDecimal amount) {
@@ -49,5 +48,16 @@ public class Money {
   @Override
   public int hashCode() {
     return amount != null ? amount.hashCode() : 0;
+  }
+
+  static class MoneyBuilder {
+
+    public Money of(BigDecimal amount) {
+      return new Money(amount);
+    }
+
+    public Money of(double amount) {
+      return new Money(new BigDecimal(amount, MathContext.DECIMAL64));
+    }
   }
 }
