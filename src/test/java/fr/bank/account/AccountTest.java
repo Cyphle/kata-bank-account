@@ -42,20 +42,20 @@ public class AccountTest {
 
   @Test
   public void should_have_zero_money_if_no_deposit_has_been_made() throws Exception {
-    assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(0, DECIMAL_64));
+    assertThat(account.getBalance()).isEqualTo(money.of(0));
   }
 
   @Test
   public void should_have_amount_of_money_when_making_a_deposit() throws Exception {
     account.deposit(money.of(100));
-    assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(100, DECIMAL_64));
+    assertThat(account.getBalance()).isEqualTo(money.of(100));
   }
 
   @Test
   public void should_have_total_deposits_of_money_when_making_multiple_deposits() throws Exception {
     account.deposit(money.of(100));
     account.deposit(money.of(200));
-    assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(300, DECIMAL_64));
+    assertThat(account.getBalance()).isEqualTo(money.of(300));
   }
 
   @Test(expected = NegativeAmountNotAllowedException.class)
@@ -67,7 +67,7 @@ public class AccountTest {
   public void should_have_amount_of_money_when_withdrawal_of_amount_is_done() throws Exception {
     account.deposit(money.of(100));
     assertThat(account.withdraw(money.of(50))).isEqualTo(money.of(50));
-    assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(50, DECIMAL_64));
+    assertThat(account.getBalance()).isEqualTo(money.of(50));
   }
 
   @Test(expected = AllowedOverdraftExceededException.class)
@@ -86,6 +86,22 @@ public class AccountTest {
     verify(bankStatement).registerStatement(
             operation.atDate(LocalDate.of(2017, 8, 24)).ofAmount(money.of(100)).create(),
             money.of(100));
-    assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(100, MathContext.DECIMAL64));
+    assertThat(account.getBalance()).isEqualTo(money.of(100));
+  }
+
+  @Test
+  public void should_add_a_withdrawal_statement_entry_when_doing_a_withdrawal() throws Exception {
+    account.deposit(money.of(100));
+
+    assertThat(account.withdraw(money.of(50))).isEqualTo(money.of(50));
+    verify(bankStatement).registerStatement(
+            operation
+                    .atDate(LocalDate.of(2017, 8, 24))
+                    .ofAmount(money.of(-50))
+                    .create(),
+            money.of(50));
+    assertThat(account.getBalance()).isEqualTo(money.of(50));
+
+
   }
 }

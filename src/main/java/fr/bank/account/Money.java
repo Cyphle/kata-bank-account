@@ -15,7 +15,7 @@ public class Money {
     return amount;
   }
 
-  public Money add(Money amount) {
+  public Money plus(Money amount) {
     return money.of(this.amount.add(amount.getAmount()));
   }
 

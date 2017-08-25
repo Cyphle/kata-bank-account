@@ -21,16 +21,15 @@ class Account {
     currentBalance = money.of(0);
   }
 
-  @Deprecated
-  BigDecimal getCurrentBalance() {
-    return currentBalance.getAmount();
+  Money getBalance() {
+    return currentBalance;
   }
 
   void deposit(Money amountToDeposit) throws NegativeAmountNotAllowedException {
     if (amountToDeposit.isNegative())
       throw new NegativeAmountNotAllowedException();
 
-    currentBalance = currentBalance.add(amountToDeposit);
+    currentBalance = currentBalance.plus(amountToDeposit);
     Operation depositOperation = operation.atDate(dateService.dateOfToday()).ofAmount(amountToDeposit).create();
     statement.registerStatement(depositOperation, currentBalance);
   }
@@ -43,6 +42,8 @@ class Account {
       throw new AllowedOverdraftExceededException();
 
     currentBalance = currentBalance.minus(amountToWithdraw);
+    Operation withdrawalOperation = operation.atDate(dateService.dateOfToday()).ofAmount(amountToWithdraw.multiplyBy(new BigDecimal(-1))).create();
+    statement.registerStatement(withdrawalOperation, currentBalance);
     return amountToWithdraw;
   }
 }
