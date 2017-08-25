@@ -3,6 +3,6 @@ package fr.bank.domain.account;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public interface AccountFormatter {
+public interface AccountStatementFormatter {
   void addStatementEntry(LocalDate operationDate, BigDecimal amount, BigDecimal amount1);
 }

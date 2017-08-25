@@ -18,8 +18,8 @@ public class BankStatement implements Statement {
   }
 
   @Override
-  public void giveStatementEntriesInformationTo(AccountFormatter accountFormatter) {
+  public void giveStatementEntriesInformationTo(AccountStatementFormatter accountStatementFormatter) {
     for (StatementEntry entry : statements)
-      entry.giveStatementEntryInformationTo(accountFormatter);
+      entry.giveStatementEntryInformationTo(accountStatementFormatter);
   }
 }

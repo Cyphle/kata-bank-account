@@ -9,7 +9,7 @@ import org.junit.Test;
 import static fr.bank.domain.account.Money.money;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AccountFormatterTest {
+public class AccountStatementFormatterTest {
   private Account account;
 
   @Before
@@ -22,12 +22,12 @@ public class AccountFormatterTest {
 
   @Test
   public void should_get_statement_entries_of_account_ready_to_be_printed() throws Exception {
-    ConsoleAccountFormatter accountFormatter = new ConsoleAccountFormatter();
+    ConsoleAccountStatementFormatter accountFormatter = new ConsoleAccountStatementFormatter();
     account.giveStatementInformationTo(accountFormatter);
     assertThat(accountFormatter.getStatementEntries()).containsExactly(
-            "2017-08-24 : DEPOSIT : 100 : 100",
+            "2017-08-24 : DEPOSIT : 100 : 150",
             "2017-08-24 : WITHDRAWAL : -50 : 50",
-            "2017-08-24 : DEPOSIT : 100 : 150"
+            "2017-08-24 : DEPOSIT : 100 : 100"
     );
   }
 }

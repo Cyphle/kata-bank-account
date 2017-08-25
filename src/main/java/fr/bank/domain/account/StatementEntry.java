@@ -10,8 +10,8 @@ public class StatementEntry {
     this.balanceOfAccountAfterOperation = balanceOfAccountAfterOperation;
   }
 
-  public void giveStatementEntryInformationTo(AccountFormatter accountFormatter) {
-    accountFormatter.addStatementEntry(operation.getOperationDate(), operation.getAmount(), balanceOfAccountAfterOperation.getAmount());
+  public void giveStatementEntryInformationTo(AccountStatementFormatter accountStatementFormatter) {
+    accountStatementFormatter.addStatementEntry(operation.getOperationDate(), operation.getAmount(), balanceOfAccountAfterOperation.getAmount());
   }
 
   @Override

@@ -1,22 +1,25 @@
 package fr.bank.infra.printer;
 
-import fr.bank.domain.account.AccountFormatter;
+import fr.bank.domain.account.AccountStatementFormatter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class ConsoleAccountFormatter implements AccountFormatter {
-  private List<String> statements;
+public class ConsoleAccountStatementFormatter implements AccountStatementFormatter {
+  private ArrayList<String> statements;
 
-  public ConsoleAccountFormatter() {
+  public ConsoleAccountStatementFormatter() {
     statements = new ArrayList<>();
   }
 
   public List<String> getStatementEntries() {
-    return statements;
+    ArrayList<String> clonedStatements = (ArrayList<String>) statements.clone();
+    Collections.reverse(clonedStatements);
+    return clonedStatements;
   }
 
   @Override
