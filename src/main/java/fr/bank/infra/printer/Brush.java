@@ -1,5 +1,5 @@
 package fr.bank.infra.printer;
 
-public interface Brush {
+interface Brush {
   void paint(String toPaint);
 }

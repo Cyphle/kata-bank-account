@@ -2,8 +2,8 @@ package fr.bank.infra.printer;
 
 import java.util.List;
 
-public class Printer {
-  private Brush brush;
+class Printer {
+  private final Brush brush;
 
   public Printer(Brush brush) {
     this.brush = brush;

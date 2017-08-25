@@ -8,16 +8,15 @@ import java.util.Collections;
 import java.util.List;
 
 public class AccountStatementFormatter implements fr.bank.domain.account.AccountStatementFormatter {
-  private ArrayList<String> statements;
+  private final ArrayList<String> statements;
 
   public AccountStatementFormatter() {
     statements = new ArrayList<>();
   }
 
   public List<String> getStatementEntries() {
-    ArrayList<String> clonedStatements = (ArrayList<String>) statements.clone();
-    Collections.reverse(clonedStatements);
-    return clonedStatements;
+    Collections.reverse(statements);
+    return statements;
   }
 
   @Override

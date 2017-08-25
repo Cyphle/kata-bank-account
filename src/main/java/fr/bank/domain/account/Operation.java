@@ -5,8 +5,8 @@ import java.time.LocalDate;
 
 public class Operation {
   public static final OperationBuilder operation = new OperationBuilder();
-  private LocalDate operationDate;
-  private Money amount;
+  private final LocalDate operationDate;
+  private final Money amount;
 
   public Operation(LocalDate operationDate, Money amount) {
     this.operationDate = operationDate;
@@ -28,9 +28,7 @@ public class Operation {
 
     Operation operation = (Operation) o;
 
-    if (operationDate != null ? !operationDate.equals(operation.operationDate) : operation.operationDate != null)
-      return false;
-    return amount != null ? amount.equals(operation.amount) : operation.amount == null;
+    return (operationDate != null ? operationDate.equals(operation.operationDate) : operation.operationDate == null) && (amount != null ? amount.equals(operation.amount) : operation.amount == null);
   }
 
   @Override

@@ -2,10 +2,10 @@ package fr.bank.domain.account;
 
 public class StatementEntry {
   public static final StatementEntryBuilder statementEntry = new StatementEntryBuilder();
-  private Operation operation;
-  private Money balanceOfAccountAfterOperation;
+  private final Operation operation;
+  private final Money balanceOfAccountAfterOperation;
 
-  public StatementEntry(Operation operation, Money balanceOfAccountAfterOperation) {
+  private StatementEntry(Operation operation, Money balanceOfAccountAfterOperation) {
     this.operation = operation;
     this.balanceOfAccountAfterOperation = balanceOfAccountAfterOperation;
   }
@@ -21,8 +21,7 @@ public class StatementEntry {
 
     StatementEntry that = (StatementEntry) o;
 
-    if (operation != null ? !operation.equals(that.operation) : that.operation != null) return false;
-    return balanceOfAccountAfterOperation != null ? balanceOfAccountAfterOperation.equals(that.balanceOfAccountAfterOperation) : that.balanceOfAccountAfterOperation == null;
+    return (operation != null ? operation.equals(that.operation) : that.operation == null) && (balanceOfAccountAfterOperation != null ? balanceOfAccountAfterOperation.equals(that.balanceOfAccountAfterOperation) : that.balanceOfAccountAfterOperation == null);
   }
 
   @Override

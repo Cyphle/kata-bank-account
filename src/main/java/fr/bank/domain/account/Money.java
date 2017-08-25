@@ -51,7 +51,7 @@ public class Money {
   }
 
   public static class MoneyBuilder {
-    public Money of(BigDecimal amount) {
+    Money of(BigDecimal amount) {
       return new Money(amount);
     }
 
@@ -59,8 +59,5 @@ public class Money {
       return new Money(new BigDecimal(amount, MathContext.DECIMAL64));
     }
 
-    public Money of(Money money) {
-      return new Money(money.amount);
-    }
   }
 }

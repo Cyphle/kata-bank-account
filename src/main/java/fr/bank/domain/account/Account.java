@@ -12,8 +12,8 @@ import static fr.bank.domain.account.Operation.operation;
 public class Account {
   private static final Money MAXIMUM_OVERDRAFT = money.of(-400);
   private Money currentBalance;
-  private Statement statement;
-  private DateService dateService;
+  private final Statement statement;
+  private final DateService dateService;
 
   public Account(Statement statement, DateService dateService) {
     this.statement = statement;
