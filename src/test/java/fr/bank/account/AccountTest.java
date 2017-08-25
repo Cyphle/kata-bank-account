@@ -100,7 +100,9 @@ public class AccountTest {
 
   @Test
   public void should_add_a_withdrawal_statement_entry_when_doing_a_withdrawal() throws Exception {
-    account.deposit(money.of(100));
+    List<StatementEntry> statementEntries = new ArrayList<>();
+    statementEntries.add(statementEntry.ofOperation(operation.atDate(LocalDate.of(2017, 8, 24)).ofAmount(money.of(100)).create()).withAccountBalanceAfter(money.of(100)).create());
+    Mockito.doReturn(statementEntries).when(bankStatement).getStatementEntries();
 
     assertThat(account.withdraw(money.of(50))).isEqualTo(money.of(50));
     verify(bankStatement).registerStatement(
@@ -109,7 +111,6 @@ public class AccountTest {
                     .ofAmount(money.of(-50))
                     .create(),
             money.of(50));
-    assertThat(account.getBalance()).isEqualTo(money.of(50));
   }
 
   @Test
