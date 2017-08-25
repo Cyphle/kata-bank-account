@@ -2,28 +2,42 @@ package fr.bank.account;
 
 import fr.bank.account.exceptions.AllowedOverdraftExceededException;
 import fr.bank.account.exceptions.NegativeAmountNotAllowedException;
+import fr.bank.date.DateService;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.time.LocalDate;
 
 import static fr.bank.account.Money.money;
+import static fr.bank.account.Operation.operation;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 
+@RunWith(MockitoJUnitRunner.class)
 public class AccountTest {
   /*
     Note :
       - getCurrentBalance should be removed after refacto
       - CurrentBalance will be accessible through a getHistory method which accept a visitor and gives everything needed
-      - Statement will be injected in account and mocked here
+      - BankStatement will be injected in account and mocked here
    */
   private static final MathContext DECIMAL_64 = MathContext.DECIMAL64;
   private Account account;
+  @Mock
+  private Statement bankStatement;
+  @Mock
+  private DateService bankDateService;
 
   @Before
   public void setUp() throws Exception {
-    account = new Account();
+    account = new Account(bankStatement, bankDateService);
+    Mockito.doReturn(LocalDate.of(2017, 8, 24)).when(bankDateService).dateOfToday();
   }
 
   @Test
@@ -64,5 +78,14 @@ public class AccountTest {
   @Test(expected = NegativeAmountNotAllowedException.class)
   public void should_not_allow_withdrawal_of_negative_amount() throws Exception {
     account.withdraw(money.of(-100));
+  }
+
+  @Test
+  public void should_add_a_deposit_statement_entry_when_doing_a_deposit() throws Exception {
+    account.deposit(money.of(100));
+    verify(bankStatement).registerStatement(
+            operation.atDate(LocalDate.of(2017, 8, 24)).ofAmount(money.of(100)).create(),
+            money.of(100));
+    assertThat(account.getCurrentBalance()).isEqualTo(new BigDecimal(100, MathContext.DECIMAL64));
   }
 }

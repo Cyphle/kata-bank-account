@@ -45,7 +45,7 @@ public class Operation {
       return this;
     }
 
-    public Operation build() {
+    public Operation create() {
       return new Operation(operationDate, amount);
     }
   }

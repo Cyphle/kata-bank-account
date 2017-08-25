@@ -42,7 +42,7 @@ public class StatementEntry {
       return this;
     }
 
-    public StatementEntry createStatementEntry() {
+    public StatementEntry create() {
       return new StatementEntry(operation, balanceOfAccountAfterOperation);
     }
   }

@@ -2,19 +2,26 @@ package fr.bank.account;
 
 import fr.bank.account.exceptions.AllowedOverdraftExceededException;
 import fr.bank.account.exceptions.NegativeAmountNotAllowedException;
+import fr.bank.date.DateService;
 
 import java.math.BigDecimal;
 
 import static fr.bank.account.Money.money;
+import static fr.bank.account.Operation.operation;
 
 class Account {
   private static final Money MAXIMUM_OVERDRAFT = money.of(-400);
   private Money currentBalance;
+  private Statement statement;
+  private DateService dateService;
 
-  public Account() {
+  public Account(Statement statement, DateService dateService) {
+    this.statement = statement;
+    this.dateService = dateService;
     currentBalance = money.of(0);
   }
 
+  @Deprecated
   BigDecimal getCurrentBalance() {
     return currentBalance.getAmount();
   }
@@ -24,6 +31,8 @@ class Account {
       throw new NegativeAmountNotAllowedException();
 
     currentBalance = currentBalance.add(amountToDeposit);
+    Operation depositOperation = operation.atDate(dateService.dateOfToday()).ofAmount(amountToDeposit).create();
+    statement.registerStatement(depositOperation, currentBalance);
   }
 
   Money withdraw(Money amountToWithdraw) throws AllowedOverdraftExceededException, NegativeAmountNotAllowedException {
