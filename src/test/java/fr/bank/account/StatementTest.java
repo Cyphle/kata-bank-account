@@ -17,6 +17,7 @@ public class StatementTest {
     - In order to check my operations
 
     statement (== relevé bancaire) : est chargé de logger les transactions
+    will need an intermediary element with associate an operation to an account balance
    */
   private Statement statement;
   private DateService dateService;
@@ -29,8 +30,14 @@ public class StatementTest {
 
   @Test
   public void should_add_a_deposit_operation() throws Exception {
-    statement.addDepositOperationOf(money.of(100), money.of(100));
-    assertThat(statement.operations).containsExactly(new Operation(LocalDate.of(2017, 8, 24), money.of(100), money.of(100)));
+    statement.addDepositOperationOf(money.of(100));
+    assertThat(statement.operations).containsExactly(new Operation(LocalDate.of(2017, 8, 24), money.of(100)));
+  }
+
+  @Test
+  public void should_add_a_withdrawal_operation() throws Exception {
+    statement.addWithdrawalOperationOf(money.of(100));
+    assertThat(statement.operations).containsExactly(new Operation(LocalDate.of(2017, 8, 24), money.of(-100)));
   }
 
   private class FakeDateService extends DateService {

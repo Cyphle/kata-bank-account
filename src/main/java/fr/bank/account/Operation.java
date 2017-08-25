@@ -7,7 +7,7 @@ public class Operation {
   private Money amount;
   private Money accountBalanceAfterOperation;
 
-  public Operation(LocalDate operationDate, Money amount, Money accountBalanceAfterOperation) {
+  public Operation(LocalDate operationDate, Money amount) {
     this.operationDate = operationDate;
     this.amount = amount;
     this.accountBalanceAfterOperation = accountBalanceAfterOperation;

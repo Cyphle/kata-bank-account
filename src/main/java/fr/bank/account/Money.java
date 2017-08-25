@@ -24,6 +24,10 @@ public class Money {
     return money.of(this.amount.subtract(amount.getAmount()));
   }
 
+  public Money multiplyBy(BigDecimal factor) {
+    return money.of(amount.multiply(factor));
+  }
+
   public boolean isNegative() {
     return amount.compareTo(new BigDecimal(0, MathContext.DECIMAL64)) < 0;
   }

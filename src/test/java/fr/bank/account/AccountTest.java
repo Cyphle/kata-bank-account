@@ -14,6 +14,7 @@ public class AccountTest {
     Note :
       - getCurrentBalance should be removed after refacto
       - CurrentBalance will be accessible through a getHistory method which accept a visitor and gives everything needed
+      - Statement will be injected in account and mocked here
    */
   private static final MathContext DECIMAL_64 = MathContext.DECIMAL64;
   private Account account;
