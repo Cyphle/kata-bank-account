@@ -7,7 +7,7 @@ public class Money {
   public static final MoneyBuilder money = new MoneyBuilder();
   private final BigDecimal amount;
 
-  Money(BigDecimal amount) {
+  private Money(BigDecimal amount) {
     this.amount = amount;
   }
 
@@ -28,7 +28,7 @@ public class Money {
   }
 
   public boolean isNegative() {
-    return amount.compareTo(new BigDecimal(0, MathContext.DECIMAL64)) < 0;
+    return isBelow(money.of(0));
   }
 
   public boolean isBelow(Money amount) {
@@ -51,7 +51,6 @@ public class Money {
   }
 
   static class MoneyBuilder {
-
     public Money of(BigDecimal amount) {
       return new Money(amount);
     }
