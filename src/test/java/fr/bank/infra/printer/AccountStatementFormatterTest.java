@@ -2,6 +2,7 @@ package fr.bank.infra.printer;
 
 import fr.bank.domain.account.Account;
 import fr.bank.domain.account.BankStatement;
+import fr.bank.infra.formatters.AccountStatementFormatter;
 import fr.bank.utils.FakeBankDateService;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,8 +23,9 @@ public class AccountStatementFormatterTest {
 
   @Test
   public void should_get_statement_entries_of_account_ready_to_be_printed() throws Exception {
-    ConsoleAccountStatementFormatter accountFormatter = new ConsoleAccountStatementFormatter();
+    AccountStatementFormatter accountFormatter = new AccountStatementFormatter();
     account.giveStatementInformationTo(accountFormatter);
+
     assertThat(accountFormatter.getStatementEntries()).containsExactly(
             "2017-08-24 : DEPOSIT : 100 : 150",
             "2017-08-24 : WITHDRAWAL : -50 : 50",

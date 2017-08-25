@@ -1,6 +1,4 @@
-package fr.bank.infra.printer;
-
-import fr.bank.domain.account.AccountStatementFormatter;
+package fr.bank.infra.formatters;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -9,10 +7,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ConsoleAccountStatementFormatter implements AccountStatementFormatter {
+public class AccountStatementFormatter implements fr.bank.domain.account.AccountStatementFormatter {
   private ArrayList<String> statements;
 
-  public ConsoleAccountStatementFormatter() {
+  public AccountStatementFormatter() {
     statements = new ArrayList<>();
   }
 
