@@ -1,10 +1,7 @@
 package fr.bank.domain.account;
 
-import fr.bank.domain.account.BankStatement;
-import fr.bank.domain.account.Operation;
-import fr.bank.domain.date.BankDateService;
 import fr.bank.domain.date.DateService;
-import org.assertj.core.api.Assertions;
+import fr.bank.utils.FakeBankDateService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +10,7 @@ import java.time.LocalDate;
 import static fr.bank.domain.account.Money.money;
 import static fr.bank.domain.account.Operation.operation;
 import static fr.bank.domain.account.StatementEntry.statementEntry;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BankStatementTest {
   /*
@@ -44,10 +41,4 @@ public class BankStatementTest {
                     .create()).withAccountBalanceAfter(money.of(100)).create());
   }
 
-  private class FakeBankDateService extends BankDateService {
-    @Override
-    protected LocalDate getTodayDate() {
-      return LocalDate.of(2017, 8, 24);
-    }
-  }
 }

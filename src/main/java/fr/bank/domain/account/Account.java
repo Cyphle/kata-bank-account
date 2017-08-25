@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import static fr.bank.domain.account.Money.money;
 import static fr.bank.domain.account.Operation.operation;
 
-class Account {
+public class Account {
   private static final Money MAXIMUM_OVERDRAFT = money.of(-400);
   private Money currentBalance;
   private Statement statement;
@@ -25,7 +25,7 @@ class Account {
     return currentBalance;
   }
 
-  void deposit(Money amountToDeposit) throws NegativeAmountNotAllowedException {
+  public void deposit(Money amountToDeposit) throws NegativeAmountNotAllowedException {
     if (amountToDeposit.isNegative())
       throw new NegativeAmountNotAllowedException();
 
@@ -37,7 +37,7 @@ class Account {
             currentBalance);
   }
 
-  Money withdraw(Money amountToWithdraw) throws AllowedOverdraftExceededException, NegativeAmountNotAllowedException {
+  public Money withdraw(Money amountToWithdraw) throws AllowedOverdraftExceededException, NegativeAmountNotAllowedException {
     if (amountToWithdraw.isNegative())
       throw new NegativeAmountNotAllowedException();
 
@@ -53,8 +53,7 @@ class Account {
     return amountToWithdraw;
   }
 
-  public void accept(AccountVisitor visitor) {
-    statement.accept(visitor);
-    visitor.visit(this);
+  public void giveStatementInformationTo(AccountFormatter accountFormatter) {
+    statement.giveStatementEntriesInformationTo(accountFormatter);
   }
 }

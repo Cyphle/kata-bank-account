@@ -50,7 +50,7 @@ public class Money {
     return amount != null ? amount.hashCode() : 0;
   }
 
-  static class MoneyBuilder {
+  public static class MoneyBuilder {
     public Money of(BigDecimal amount) {
       return new Money(amount);
     }

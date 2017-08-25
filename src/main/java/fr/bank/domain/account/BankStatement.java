@@ -1,7 +1,6 @@
 package fr.bank.domain.account;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static fr.bank.domain.account.StatementEntry.statementEntry;
@@ -14,19 +13,13 @@ public class BankStatement implements Statement {
   }
 
   @Override
-  public List<StatementEntry> getStatementEntries() {
-    return Collections.unmodifiableList(statements);
-  }
-
-  @Override
   public void registerStatement(Operation operation, Money balanceOfAccountAfterOperation) {
     statements.add(statementEntry.ofOperation(operation).withAccountBalanceAfter(balanceOfAccountAfterOperation).create());
   }
 
   @Override
-  public void accept(AccountVisitor visitor) {
+  public void giveStatementEntriesInformationTo(AccountFormatter accountFormatter) {
     for (StatementEntry entry : statements)
-      entry.accept(visitor);
-    visitor.visit(this);
+      entry.giveStatementEntryInformationTo(accountFormatter);
   }
 }

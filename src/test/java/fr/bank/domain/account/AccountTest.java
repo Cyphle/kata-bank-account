@@ -1,7 +1,5 @@
 package fr.bank.domain.account;
 
-import fr.bank.domain.account.Account;
-import fr.bank.domain.account.Statement;
 import fr.bank.domain.account.exceptions.AllowedOverdraftExceededException;
 import fr.bank.domain.account.exceptions.NegativeAmountNotAllowedException;
 import fr.bank.domain.date.DateService;
@@ -12,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.math.MathContext;
 import java.time.LocalDate;
 
 import static fr.bank.domain.account.Money.money;
@@ -24,11 +21,8 @@ import static org.mockito.Mockito.verify;
 public class AccountTest {
   /*
     Note :
-      - getCurrentBalance should be removed after refacto
-      - CurrentBalance will be accessible through a getHistory method which accept a visitor and gives everything needed
-      - BankStatement will be injected in account and mocked here
+      - getBalance to delete
    */
-  private static final MathContext DECIMAL_64 = MathContext.DECIMAL64;
   private Account account;
   @Mock
   private Statement bankStatement;

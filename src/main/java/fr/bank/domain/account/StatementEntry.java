@@ -10,6 +10,10 @@ public class StatementEntry {
     this.balanceOfAccountAfterOperation = balanceOfAccountAfterOperation;
   }
 
+  public void giveStatementEntryInformationTo(AccountFormatter accountFormatter) {
+    accountFormatter.addStatementEntry(operation.getOperationDate(), operation.getAmount(), balanceOfAccountAfterOperation.getAmount());
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -26,11 +30,6 @@ public class StatementEntry {
     int result = operation != null ? operation.hashCode() : 0;
     result = 31 * result + (balanceOfAccountAfterOperation != null ? balanceOfAccountAfterOperation.hashCode() : 0);
     return result;
-  }
-
-  public void accept(AccountVisitor visitor) {
-    operation.accept(visitor);
-    visitor.visit(this);
   }
 
   static class StatementEntryBuilder {

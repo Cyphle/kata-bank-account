@@ -1,5 +1,6 @@
 package fr.bank.domain.account;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Operation {
@@ -12,8 +13,12 @@ public class Operation {
     this.amount = amount;
   }
 
-  public void accept(AccountVisitor visitor) {
-    visitor.visit(this);
+  public BigDecimal getAmount() {
+    return amount.getAmount();
+  }
+
+  public LocalDate getOperationDate() {
+    return operationDate;
   }
 
   @Override
