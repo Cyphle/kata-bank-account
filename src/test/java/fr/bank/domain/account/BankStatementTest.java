@@ -13,15 +13,6 @@ import static fr.bank.domain.account.StatementEntry.statementEntry;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BankStatementTest {
-  /*
-    - As a bank client
-    - I want to see the history. (operation, date, amount, balance)  of my operations
-        - Each operation has a date, an amount and the account balance after the operation
-    - In order to check my operations
-
-    bankStatement (== relevé bancaire) : est chargé de logger les transactions
-    will need an intermediary element with associate an operation to an account balance
-   */
   private BankStatement bankStatement;
   private DateService bankDateService;
 
@@ -40,5 +31,4 @@ public class BankStatementTest {
                     .ofAmount(money.of(100))
                     .create()).withAccountBalanceAfter(money.of(100)).create());
   }
-
 }

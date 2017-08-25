@@ -21,10 +21,6 @@ public class Account {
     currentBalance = money.of(0);
   }
 
-  Money getBalance() {
-    return currentBalance;
-  }
-
   public void deposit(Money amountToDeposit) throws NegativeAmountNotAllowedException {
     if (amountToDeposit.isNegative())
       throw new NegativeAmountNotAllowedException();

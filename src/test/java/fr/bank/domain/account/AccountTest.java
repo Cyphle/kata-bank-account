@@ -19,10 +19,6 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountTest {
-  /*
-    Note :
-      - getBalance to delete
-   */
   private Account account;
   @Mock
   private Statement bankStatement;
@@ -35,37 +31,9 @@ public class AccountTest {
     Mockito.doReturn(LocalDate.of(2017, 8, 24)).when(bankDateService).dateOfToday();
   }
 
-  @Test
-  public void should_have_zero_money_if_no_deposit_has_been_made() throws Exception {
-    assertThat(account.getBalance()).isEqualTo(money.of(0));
-  }
-
-  @Test
-  public void should_have_amount_of_money_when_making_a_deposit() throws Exception {
-    account.deposit(money.of(100));
-
-    assertThat(account.getBalance()).isEqualTo(money.of(100));
-  }
-
-  @Test
-  public void should_have_total_deposits_of_money_when_making_multiple_deposits() throws Exception {
-    account.deposit(money.of(100));
-    account.deposit(money.of(200));
-
-    assertThat(account.getBalance()).isEqualTo(money.of(300));
-  }
-
   @Test(expected = NegativeAmountNotAllowedException.class)
   public void should_not_be_possible_to_do_a_negative_deposit() throws Exception {
     account.deposit(money.of(-100));
-  }
-
-  @Test
-  public void should_have_amount_of_money_when_withdrawal_of_amount_is_done() throws Exception {
-    account.deposit(money.of(100));
-
-    assertThat(account.withdraw(money.of(50))).isEqualTo(money.of(50));
-    assertThat(account.getBalance()).isEqualTo(money.of(50));
   }
 
   @Test(expected = AllowedOverdraftExceededException.class)
@@ -88,7 +56,19 @@ public class AccountTest {
                     .ofAmount(money.of(100))
                     .create(),
             money.of(100));
-    assertThat(account.getBalance()).isEqualTo(money.of(100));
+  }
+
+  @Test
+  public void should_add_two_deposit_statement_entries_when_doing_two_deposits() throws Exception {
+    account.deposit(money.of(100));
+    account.deposit(money.of(200));
+
+    verify(bankStatement).registerStatement(
+            operation
+                    .atDate(LocalDate.of(2017, 8, 24))
+                    .ofAmount(money.of(200))
+                    .create(),
+            money.of(300));
   }
 
   @Test
@@ -102,6 +82,20 @@ public class AccountTest {
                     .ofAmount(money.of(-50))
                     .create(),
             money.of(50));
-    assertThat(account.getBalance()).isEqualTo(money.of(50));
+  }
+
+  @Test
+  public void should_add_two_withdrawal_statement_entries_when_doing_two_withdrawal() throws Exception {
+    account.deposit(money.of(100));
+
+    assertThat(account.withdraw(money.of(50))).isEqualTo(money.of(50));
+    assertThat(account.withdraw(money.of(20))).isEqualTo(money.of(20));
+    verify(bankStatement).registerStatement(
+            operation
+                    .atDate(LocalDate.of(2017, 8, 24))
+                    .ofAmount(money.of(-20))
+                    .create(),
+            money.of(30));
+
   }
 }
