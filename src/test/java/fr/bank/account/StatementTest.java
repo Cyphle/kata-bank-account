@@ -7,6 +7,8 @@ import org.junit.Test;
 import java.time.LocalDate;
 
 import static fr.bank.account.Money.money;
+import static fr.bank.account.Operation.operation;
+import static fr.bank.account.StatementEntry.statementEntry;
 import static org.assertj.core.api.Assertions.*;
 
 public class StatementTest {
@@ -31,13 +33,23 @@ public class StatementTest {
   @Test
   public void should_add_a_deposit_operation() throws Exception {
     statement.addDepositOperationOf(money.of(100));
-    assertThat(statement.operations).containsExactly(new Operation(LocalDate.of(2017, 8, 24), money.of(100)));
+    assertThat(statement.operations).containsExactly(operation.atDate(LocalDate.of(2017, 8, 24)).ofAmount(money.of(100)).build());
   }
 
   @Test
   public void should_add_a_withdrawal_operation() throws Exception {
     statement.addWithdrawalOperationOf(money.of(100));
-    assertThat(statement.operations).containsExactly(new Operation(LocalDate.of(2017, 8, 24), money.of(-100)));
+    assertThat(statement.operations).containsExactly(operation.atDate(LocalDate.of(2017, 8, 24)).ofAmount(money.of(-100)).build());
+  }
+
+  @Test
+  public void should_add_a_statement_entry_for_a_deposit() throws Exception {
+    statement.registerStatement(new Operation(dateService.dateOfToday(), money.of(100)), money.of(100));
+    assertThat(statement.statements).containsExactly(
+            statementEntry.ofOperation(operation
+                    .atDate(LocalDate.of(2017, 8, 24))
+                    .ofAmount(money.of(100))
+                    .build()).withAccountBalanceAfter(money.of(100)).createStatementEntry());
   }
 
   private class FakeDateService extends DateService {

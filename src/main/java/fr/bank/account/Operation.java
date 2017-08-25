@@ -3,14 +3,13 @@ package fr.bank.account;
 import java.time.LocalDate;
 
 public class Operation {
+  public static final OperationBuilder operation = new OperationBuilder();
   private LocalDate operationDate;
   private Money amount;
-  private Money accountBalanceAfterOperation;
 
   public Operation(LocalDate operationDate, Money amount) {
     this.operationDate = operationDate;
     this.amount = amount;
-    this.accountBalanceAfterOperation = accountBalanceAfterOperation;
   }
 
   @Override
@@ -22,15 +21,32 @@ public class Operation {
 
     if (operationDate != null ? !operationDate.equals(operation.operationDate) : operation.operationDate != null)
       return false;
-    if (amount != null ? !amount.equals(operation.amount) : operation.amount != null) return false;
-    return accountBalanceAfterOperation != null ? accountBalanceAfterOperation.equals(operation.accountBalanceAfterOperation) : operation.accountBalanceAfterOperation == null;
+    return amount != null ? amount.equals(operation.amount) : operation.amount == null;
   }
 
   @Override
   public int hashCode() {
     int result = operationDate != null ? operationDate.hashCode() : 0;
     result = 31 * result + (amount != null ? amount.hashCode() : 0);
-    result = 31 * result + (accountBalanceAfterOperation != null ? accountBalanceAfterOperation.hashCode() : 0);
     return result;
+  }
+
+  static class OperationBuilder {
+    private LocalDate operationDate;
+    private Money amount;
+
+    public OperationBuilder atDate(LocalDate operationDate) {
+      this.operationDate = operationDate;
+      return this;
+    }
+
+    public OperationBuilder ofAmount(Money amount) {
+      this.amount = amount;
+      return this;
+    }
+
+    public Operation build() {
+      return new Operation(operationDate, amount);
+    }
   }
 }
