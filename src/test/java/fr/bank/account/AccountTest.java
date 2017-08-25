@@ -10,6 +10,11 @@ import static fr.bank.account.MoneyBuilder.money;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AccountTest {
+  /*
+    Note :
+      - getCurrentBalance should be removed after refacto
+      - CurrentBalance will be accessible through a getHistory method which accept a visitor and gives everything needed
+   */
   private static final MathContext DECIMAL_64 = MathContext.DECIMAL64;
   private Account account;
 
