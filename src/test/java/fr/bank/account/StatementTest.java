@@ -27,19 +27,7 @@ public class StatementTest {
   @Before
   public void setUp() throws Exception {
     dateService = new FakeDateService();
-    statement = new Statement(dateService);
-  }
-
-  @Test
-  public void should_add_a_deposit_operation() throws Exception {
-    statement.addDepositOperationOf(money.of(100));
-    assertThat(statement.operations).containsExactly(operation.atDate(LocalDate.of(2017, 8, 24)).ofAmount(money.of(100)).build());
-  }
-
-  @Test
-  public void should_add_a_withdrawal_operation() throws Exception {
-    statement.addWithdrawalOperationOf(money.of(100));
-    assertThat(statement.operations).containsExactly(operation.atDate(LocalDate.of(2017, 8, 24)).ofAmount(money.of(-100)).build());
+    statement = new Statement();
   }
 
   @Test
