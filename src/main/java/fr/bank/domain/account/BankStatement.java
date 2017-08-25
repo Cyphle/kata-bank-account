@@ -6,7 +6,7 @@ import java.util.List;
 import static fr.bank.domain.account.StatementEntry.statementEntry;
 
 public class BankStatement implements Statement {
-  public final List<StatementEntry> statements;
+  final List<StatementEntry> statements;
 
   public BankStatement() {
     statements = new ArrayList<>();

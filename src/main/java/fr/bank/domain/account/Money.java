@@ -11,27 +11,27 @@ public class Money {
     this.amount = amount;
   }
 
-  public BigDecimal getAmount() {
+  BigDecimal getAmount() {
     return amount;
   }
 
-  public Money plus(Money amount) {
+  Money plus(Money amount) {
     return money.of(this.amount.add(amount.getAmount()));
   }
 
-  public Money minus(Money amount) {
+  Money minus(Money amount) {
     return money.of(this.amount.subtract(amount.getAmount()));
   }
 
-  public Money multiplyBy(BigDecimal factor) {
+  Money multiplyBy(BigDecimal factor) {
     return money.of(amount.multiply(factor));
   }
 
-  public boolean isNegative() {
+  boolean isNegative() {
     return isBelow(money.of(0));
   }
 
-  public boolean isBelow(Money amount) {
+  boolean isBelow(Money amount) {
     return this.amount.compareTo(amount.getAmount()) < 0;
   }
 

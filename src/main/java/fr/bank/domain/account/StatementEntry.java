@@ -1,7 +1,7 @@
 package fr.bank.domain.account;
 
 public class StatementEntry {
-  public static final StatementEntryBuilder statementEntry = new StatementEntryBuilder();
+  static final StatementEntryBuilder statementEntry = new StatementEntryBuilder();
   private final Operation operation;
   private final Money balanceOfAccountAfterOperation;
 
@@ -10,7 +10,7 @@ public class StatementEntry {
     this.balanceOfAccountAfterOperation = balanceOfAccountAfterOperation;
   }
 
-  public void giveStatementEntryInformationTo(AccountStatementFormatter accountStatementFormatter) {
+  void giveStatementEntryInformationTo(AccountStatementFormatter accountStatementFormatter) {
     accountStatementFormatter.addStatementEntry(operation.getOperationDate(), operation.getAmount(), balanceOfAccountAfterOperation.getAmount());
   }
 
@@ -35,17 +35,17 @@ public class StatementEntry {
     private Operation operation;
     private Money balanceOfAccountAfterOperation;
 
-    public StatementEntryBuilder ofOperation(Operation operation) {
+    StatementEntryBuilder ofOperation(Operation operation) {
       this.operation = operation;
       return this;
     }
 
-    public StatementEntryBuilder withAccountBalanceAfter(Money balanceOfAccountAfterOperation) {
+    StatementEntryBuilder withAccountBalanceAfter(Money balanceOfAccountAfterOperation) {
       this.balanceOfAccountAfterOperation = balanceOfAccountAfterOperation;
       return this;
     }
 
-    public StatementEntry create() {
+    StatementEntry create() {
       return new StatementEntry(operation, balanceOfAccountAfterOperation);
     }
   }

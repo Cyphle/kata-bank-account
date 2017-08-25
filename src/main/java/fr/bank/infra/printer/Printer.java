@@ -5,11 +5,11 @@ import java.util.List;
 class Printer {
   private final Brush brush;
 
-  public Printer(Brush brush) {
+  Printer(Brush brush) {
     this.brush = brush;
   }
 
-  public void print(List<String> listToPrint) {
+  void print(List<String> listToPrint) {
     brush.paint("Date of operation : Type of operation : Amount of operation : Account balance after operation");
     for (String toPrint : listToPrint)
       brush.paint(toPrint);

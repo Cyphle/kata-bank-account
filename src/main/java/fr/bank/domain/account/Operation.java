@@ -8,16 +8,16 @@ public class Operation {
   private final LocalDate operationDate;
   private final Money amount;
 
-  public Operation(LocalDate operationDate, Money amount) {
+  Operation(LocalDate operationDate, Money amount) {
     this.operationDate = operationDate;
     this.amount = amount;
   }
 
-  public BigDecimal getAmount() {
+  BigDecimal getAmount() {
     return amount.getAmount();
   }
 
-  public LocalDate getOperationDate() {
+  LocalDate getOperationDate() {
     return operationDate;
   }
 
@@ -43,16 +43,17 @@ public class Operation {
     private Money amount;
 
 
-    public OperationBuilder atDate(LocalDate operationDate) {
+    OperationBuilder atDate(LocalDate operationDate) {
       this.operationDate = operationDate;
       return this;
     }
-    public OperationBuilder ofAmount(Money amount) {
+
+    OperationBuilder ofAmount(Money amount) {
       this.amount = amount;
       return this;
     }
 
-    public Operation create() {
+    Operation create() {
       return new Operation(operationDate, amount);
     }
   }
