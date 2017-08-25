@@ -2,6 +2,8 @@ package fr.bank.account;
 
 import java.time.LocalDate;
 
+import static fr.bank.account.Money.money;
+
 public class Operation {
   public static final OperationBuilder operation = new OperationBuilder();
   private LocalDate operationDate;
@@ -10,6 +12,10 @@ public class Operation {
   public Operation(LocalDate operationDate, Money amount) {
     this.operationDate = operationDate;
     this.amount = amount;
+  }
+
+  public Money getAmount() {
+    return money.of(amount);
   }
 
   @Override
@@ -35,11 +41,11 @@ public class Operation {
     private LocalDate operationDate;
     private Money amount;
 
+
     public OperationBuilder atDate(LocalDate operationDate) {
       this.operationDate = operationDate;
       return this;
     }
-
     public OperationBuilder ofAmount(Money amount) {
       this.amount = amount;
       return this;

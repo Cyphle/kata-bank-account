@@ -10,12 +10,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.math.BigDecimal;
 import java.math.MathContext;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static fr.bank.account.Money.money;
 import static fr.bank.account.Operation.operation;
+import static fr.bank.account.StatementEntry.statementEntry;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
@@ -48,6 +50,7 @@ public class AccountTest {
   @Test
   public void should_have_amount_of_money_when_making_a_deposit() throws Exception {
     account.deposit(money.of(100));
+
     assertThat(account.getBalance()).isEqualTo(money.of(100));
   }
 
@@ -55,6 +58,7 @@ public class AccountTest {
   public void should_have_total_deposits_of_money_when_making_multiple_deposits() throws Exception {
     account.deposit(money.of(100));
     account.deposit(money.of(200));
+
     assertThat(account.getBalance()).isEqualTo(money.of(300));
   }
 
@@ -66,6 +70,7 @@ public class AccountTest {
   @Test
   public void should_have_amount_of_money_when_withdrawal_of_amount_is_done() throws Exception {
     account.deposit(money.of(100));
+
     assertThat(account.withdraw(money.of(50))).isEqualTo(money.of(50));
     assertThat(account.getBalance()).isEqualTo(money.of(50));
   }
@@ -83,8 +88,12 @@ public class AccountTest {
   @Test
   public void should_add_a_deposit_statement_entry_when_doing_a_deposit() throws Exception {
     account.deposit(money.of(100));
+
     verify(bankStatement).registerStatement(
-            operation.atDate(LocalDate.of(2017, 8, 24)).ofAmount(money.of(100)).create(),
+            operation
+                    .atDate(LocalDate.of(2017, 8, 24))
+                    .ofAmount(money.of(100))
+                    .create(),
             money.of(100));
     assertThat(account.getBalance()).isEqualTo(money.of(100));
   }
@@ -101,7 +110,17 @@ public class AccountTest {
                     .create(),
             money.of(50));
     assertThat(account.getBalance()).isEqualTo(money.of(50));
+  }
 
+  @Test
+  public void should_calculate_current_balance_from_statement_entries() throws Exception {
+    List<StatementEntry> statementEntries = new ArrayList<>();
+    statementEntries.add(statementEntry.ofOperation(operation.atDate(LocalDate.of(2017, 8, 24)).ofAmount(money.of(100)).create()).withAccountBalanceAfter(money.of(100)).create());
+    statementEntries.add(statementEntry.ofOperation(operation.atDate(LocalDate.of(2017, 8, 24)).ofAmount(money.of(300)).create()).withAccountBalanceAfter(money.of(400)).create());
+    statementEntries.add(statementEntry.ofOperation(operation.atDate(LocalDate.of(2017, 8, 24)).ofAmount(money.of(-50)).create()).withAccountBalanceAfter(money.of(350)).create());
+    statementEntries.add(statementEntry.ofOperation(operation.atDate(LocalDate.of(2017, 8, 24)).ofAmount(money.of(-200)).create()).withAccountBalanceAfter(money.of(150)).create());
+    Mockito.doReturn(statementEntries).when(bankStatement).getStatementEntries();
 
+    assertThat(account.calculateCurrentBalance()).isEqualTo(money.of(150));
   }
 }

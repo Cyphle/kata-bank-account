@@ -58,5 +58,9 @@ public class Money {
     public Money of(double amount) {
       return new Money(new BigDecimal(amount, MathContext.DECIMAL64));
     }
+
+    public Money of(Money money) {
+      return new Money(money.amount);
+    }
   }
 }

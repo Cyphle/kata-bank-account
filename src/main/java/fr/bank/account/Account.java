@@ -25,6 +25,13 @@ class Account {
     return currentBalance;
   }
 
+  public Money calculateCurrentBalance() {
+    return statement.getStatementEntries()
+            .stream()
+            .map(StatementEntry::getStatementAmount)
+            .reduce(money.of(0), (a, b) -> a.plus(b));
+  }
+
   void deposit(Money amountToDeposit) throws NegativeAmountNotAllowedException {
     if (amountToDeposit.isNegative())
       throw new NegativeAmountNotAllowedException();
