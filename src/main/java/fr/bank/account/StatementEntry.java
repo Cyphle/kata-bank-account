@@ -10,10 +10,6 @@ public class StatementEntry {
     this.balanceOfAccountAfterOperation = balanceOfAccountAfterOperation;
   }
 
-  public Money getStatementAmount() {
-    return operation.getAmount();
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

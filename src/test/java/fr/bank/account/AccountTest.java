@@ -100,9 +100,7 @@ public class AccountTest {
 
   @Test
   public void should_add_a_withdrawal_statement_entry_when_doing_a_withdrawal() throws Exception {
-    List<StatementEntry> statementEntries = new ArrayList<>();
-    statementEntries.add(statementEntry.ofOperation(operation.atDate(LocalDate.of(2017, 8, 24)).ofAmount(money.of(100)).create()).withAccountBalanceAfter(money.of(100)).create());
-    Mockito.doReturn(statementEntries).when(bankStatement).getStatementEntries();
+    account.deposit(money.of(100));
 
     assertThat(account.withdraw(money.of(50))).isEqualTo(money.of(50));
     verify(bankStatement).registerStatement(
@@ -111,17 +109,6 @@ public class AccountTest {
                     .ofAmount(money.of(-50))
                     .create(),
             money.of(50));
-  }
-
-  @Test
-  public void should_calculate_current_balance_from_statement_entries() throws Exception {
-    List<StatementEntry> statementEntries = new ArrayList<>();
-    statementEntries.add(statementEntry.ofOperation(operation.atDate(LocalDate.of(2017, 8, 24)).ofAmount(money.of(100)).create()).withAccountBalanceAfter(money.of(100)).create());
-    statementEntries.add(statementEntry.ofOperation(operation.atDate(LocalDate.of(2017, 8, 24)).ofAmount(money.of(300)).create()).withAccountBalanceAfter(money.of(400)).create());
-    statementEntries.add(statementEntry.ofOperation(operation.atDate(LocalDate.of(2017, 8, 24)).ofAmount(money.of(-50)).create()).withAccountBalanceAfter(money.of(350)).create());
-    statementEntries.add(statementEntry.ofOperation(operation.atDate(LocalDate.of(2017, 8, 24)).ofAmount(money.of(-200)).create()).withAccountBalanceAfter(money.of(150)).create());
-    Mockito.doReturn(statementEntries).when(bankStatement).getStatementEntries();
-
-    assertThat(account.calculateCurrentBalance()).isEqualTo(money.of(150));
+    assertThat(account.getBalance()).isEqualTo(money.of(50));
   }
 }

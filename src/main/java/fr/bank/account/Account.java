@@ -21,16 +21,8 @@ class Account {
     currentBalance = money.of(0);
   }
 
-  @Deprecated
   Money getBalance() {
     return currentBalance;
-  }
-
-  public Money calculateCurrentBalance() {
-    return statement.getStatementEntries()
-            .stream()
-            .map(StatementEntry::getStatementAmount)
-            .reduce(money.of(0), (a, b) -> a.plus(b));
   }
 
   void deposit(Money amountToDeposit) throws NegativeAmountNotAllowedException {
@@ -38,10 +30,8 @@ class Account {
       throw new NegativeAmountNotAllowedException();
 
     currentBalance = currentBalance.plus(amountToDeposit);
-
-    Money balanceAfterOperation = calculateCurrentBalance().plus(amountToDeposit);
     Operation depositOperation = operation.atDate(dateService.dateOfToday()).ofAmount(amountToDeposit).create();
-    statement.registerStatement(depositOperation, balanceAfterOperation);
+    statement.registerStatement(depositOperation, currentBalance);
   }
 
   Money withdraw(Money amountToWithdraw) throws AllowedOverdraftExceededException, NegativeAmountNotAllowedException {
@@ -52,10 +42,8 @@ class Account {
       throw new AllowedOverdraftExceededException();
 
     currentBalance = currentBalance.minus(amountToWithdraw);
-
-    Money balanceAfterOperation = calculateCurrentBalance().minus(amountToWithdraw);
     Operation withdrawalOperation = operation.atDate(dateService.dateOfToday()).ofAmount(amountToWithdraw.multiplyBy(new BigDecimal(-1))).create();
-    statement.registerStatement(withdrawalOperation, balanceAfterOperation);
+    statement.registerStatement(withdrawalOperation, currentBalance);
     return amountToWithdraw;
   }
 }
