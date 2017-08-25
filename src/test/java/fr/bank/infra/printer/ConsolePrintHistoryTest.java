@@ -35,7 +35,6 @@ public class ConsolePrintHistoryTest {
     account.deposit(money.of(100));
 
     account.giveStatementInformationTo(accountFormatter);
-
     printer.print(accountFormatter.getStatementEntries());
 
     verify(consoleBrush).paint("Date of operation : Type of operation : Amount of operation : Account balance after operation");
