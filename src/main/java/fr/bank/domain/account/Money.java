@@ -1,34 +1,37 @@
-package fr.bank.account;
+package fr.bank.domain.account;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-import static fr.bank.account.MoneyBuilder.money;
-
 public class Money {
+  public static final MoneyBuilder money = new MoneyBuilder();
   private final BigDecimal amount;
 
-  Money(BigDecimal amount) {
+  private Money(BigDecimal amount) {
     this.amount = amount;
   }
 
-  public BigDecimal getAmount() {
+  BigDecimal getAmount() {
     return amount;
   }
 
-  public Money add(Money amount) {
+  Money plus(Money amount) {
     return money.of(this.amount.add(amount.getAmount()));
   }
 
-  public Money minus(Money amount) {
+  Money minus(Money amount) {
     return money.of(this.amount.subtract(amount.getAmount()));
   }
 
-  public boolean isNegative() {
-    return amount.compareTo(new BigDecimal(0, MathContext.DECIMAL64)) < 0;
+  Money multiplyBy(BigDecimal factor) {
+    return money.of(amount.multiply(factor));
   }
 
-  public boolean isBelow(Money amount) {
+  boolean isNegative() {
+    return isBelow(money.of(0));
+  }
+
+  boolean isBelow(Money amount) {
     return this.amount.compareTo(amount.getAmount()) < 0;
   }
 
@@ -45,5 +48,16 @@ public class Money {
   @Override
   public int hashCode() {
     return amount != null ? amount.hashCode() : 0;
+  }
+
+  public static class MoneyBuilder {
+    Money of(BigDecimal amount) {
+      return new Money(amount);
+    }
+
+    public Money of(double amount) {
+      return new Money(new BigDecimal(amount, MathContext.DECIMAL64));
+    }
+
   }
 }

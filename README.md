@@ -23,6 +23,7 @@ Think of your personal bank account experience When in doubt, go for the simples
     - In order to retrieve some or all of my savings
 
 - US 3: 
-    - In order to check my operations
     - As a bank client
-    - I want to see the history (operation, date, amount, balance)  of my operations
+    - I want to see the history. (operation, date, amount, balance)  of my operations
+        - Each operation has a date, an amount and the account balance after the operation
+    - In order to check my operations
