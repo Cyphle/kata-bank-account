@@ -49,7 +49,7 @@ public class Account {
     return amountToWithdraw;
   }
 
-  public void giveStatementInformationTo(AccountStatementFormatter accountStatementFormatter) {
-    statement.giveStatementEntriesInformationTo(accountStatementFormatter);
+  public void giveStatementInformationTo(StatementFormatter statementFormatter) {
+    statement.giveStatementEntriesInformationTo(statementFormatter);
   }
 }

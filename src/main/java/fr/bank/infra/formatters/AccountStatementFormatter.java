@@ -1,5 +1,7 @@
 package fr.bank.infra.formatters;
 
+import fr.bank.domain.account.StatementFormatter;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -7,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AccountStatementFormatter implements fr.bank.domain.account.AccountStatementFormatter {
+public class AccountStatementFormatter implements StatementFormatter {
   private final ArrayList<String> statements;
 
   public AccountStatementFormatter() {
