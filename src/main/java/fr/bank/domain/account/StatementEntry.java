@@ -2,7 +2,7 @@ package fr.bank.domain.account;
 
 import java.time.LocalDate;
 
-public class StatementEntry {
+public class StatementEntry implements InformationProvider {
   static final StatementEntryBuilder statementEntry = new StatementEntryBuilder();
   private final Operation operation;
   private final Money balanceOfAccountAfterOperation;
@@ -12,12 +12,13 @@ public class StatementEntry {
     this.balanceOfAccountAfterOperation = balanceOfAccountAfterOperation;
   }
 
-  void giveStatementEntryInformationTo(StatementFormatter statementFormatter) {
-    statementFormatter.addStatementEntry(operation.getOperationDate(), operation.getAmount(), balanceOfAccountAfterOperation.getAmount());
-  }
-
   public LocalDate getOperationDate() {
     return operation.getOperationDate();
+  }
+
+  @Override
+  public void giveStatementInformationTo(StatementFormatter statementFormatter) {
+    statementFormatter.addStatementEntry(operation.getOperationDate(), operation.getAmount(), balanceOfAccountAfterOperation.getAmount());
   }
 
   @Override

@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import static fr.bank.domain.account.Money.money;
 import static fr.bank.domain.account.Operation.operation;
 
-public class Account {
+public class Account implements InformationProvider {
   private static final Money MAXIMUM_OVERDRAFT = money.of(-400);
   private Money currentBalance;
   private final Statement statement;
@@ -47,8 +47,9 @@ public class Account {
     return amountToWithdraw;
   }
 
+  @Override
   public void giveStatementInformationTo(StatementFormatter statementFormatter) {
-    statement.giveStatementEntriesInformationTo(statementFormatter);
+    statement.giveStatementInformationTo(statementFormatter);
   }
 
   private void checkIsPositive(Money amountToDeposit) throws NegativeAmountNotAllowedException {

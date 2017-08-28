@@ -19,12 +19,12 @@ public class BankStatement implements Statement {
   }
 
   @Override
-  public void giveStatementEntriesInformationTo(StatementFormatter statementFormatter) {
+  public void giveStatementInformationTo(StatementFormatter statementFormatter) {
     List<StatementEntry> sortedStatements = statements
             .stream()
             .sorted((entryOne, entryTwo) -> entryTwo.getOperationDate().compareTo(entryOne.getOperationDate()))
             .collect(Collectors.toList());
     for (StatementEntry entry : sortedStatements)
-      entry.giveStatementEntryInformationTo(statementFormatter);
+      entry.giveStatementInformationTo(statementFormatter);
   }
 }

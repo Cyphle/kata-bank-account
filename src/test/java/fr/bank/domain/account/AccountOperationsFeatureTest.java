@@ -28,7 +28,6 @@ public class AccountOperationsFeatureTest {
     given(dateService.dateOfToday()).willReturn(LocalDate.of(2017, 8, 24));
   }
 
-
   @Test
   public void should_get_statement_entries_of_account_ready_to_be_printed() throws Exception {
     given(dateService.dateOfToday()).willReturn(
