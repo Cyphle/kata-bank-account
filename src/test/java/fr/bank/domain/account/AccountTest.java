@@ -28,7 +28,7 @@ public class AccountTest {
 
   @Before
   public void setUp() throws Exception {
-    account = new Account(bankStatement, bankDateService);
+    account = new AccountImpl(bankStatement, bankDateService);
     Mockito.doReturn(LocalDate.of(2017, 8, 24)).when(bankDateService).dateOfToday();
   }
 

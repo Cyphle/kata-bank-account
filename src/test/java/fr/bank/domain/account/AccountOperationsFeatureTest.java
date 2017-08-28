@@ -18,12 +18,12 @@ import static org.mockito.BDDMockito.given;
 public class AccountOperationsFeatureTest {
   @Mock
   private DateService dateService;
-  private Account account;
+  private AccountImpl account;
   private AccountStatementFormatter accountFormatter;
 
   @Before
   public void setUp() throws Exception {
-    account = new Account(new fr.bank.domain.statement.BankStatement(), dateService);
+    account = new AccountImpl(new fr.bank.domain.statement.BankStatement(), dateService);
     accountFormatter = new AccountStatementFormatter();
     given(dateService.dateOfToday()).willReturn(LocalDate.of(2017, 8, 24));
   }
