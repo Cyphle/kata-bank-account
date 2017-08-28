@@ -1,15 +1,14 @@
 package fr.bank.infra.printer;
 
 import fr.bank.domain.account.Account;
-import fr.bank.domain.account.BankStatement;
+import fr.bank.domain.account.Statement;
 import fr.bank.domain.date.DateService;
+import fr.bank.domain.statement.BankStatement;
 import fr.bank.infra.formatters.AccountStatementFormatter;
-import fr.bank.utils.FakeBankDateService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.LocalDate;
@@ -21,13 +20,14 @@ import static org.mockito.BDDMockito.given;
 @RunWith(MockitoJUnitRunner.class)
 public class AccountStatementFormatterTest {
   @Mock
-  DateService dateService;
+  private DateService dateService;
   private Account account;
   private AccountStatementFormatter accountFormatter;
 
   @Before
   public void setUp() throws Exception {
-    account = new Account(new BankStatement(), dateService);
+    Statement bankStatement = new BankStatement();
+    account = new Account(bankStatement, dateService);
     accountFormatter = new AccountStatementFormatter();
     given(dateService.dateOfToday()).willReturn(LocalDate.of(2017, 8, 24));
   }

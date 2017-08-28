@@ -17,13 +17,13 @@ import static org.mockito.BDDMockito.given;
 @RunWith(MockitoJUnitRunner.class)
 public class AccountOperationsFeatureTest {
   @Mock
-  DateService dateService;
+  private DateService dateService;
   private Account account;
   private AccountStatementFormatter accountFormatter;
 
   @Before
   public void setUp() throws Exception {
-    account = new Account(new BankStatement(), dateService);
+    account = new Account(new fr.bank.domain.statement.BankStatement(), dateService);
     accountFormatter = new AccountStatementFormatter();
     given(dateService.dateOfToday()).willReturn(LocalDate.of(2017, 8, 24));
   }

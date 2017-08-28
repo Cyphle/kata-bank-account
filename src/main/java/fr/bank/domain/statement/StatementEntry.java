@@ -1,9 +1,14 @@
-package fr.bank.domain.account;
+package fr.bank.domain.statement;
+
+import fr.bank.domain.account.InformationProvider;
+import fr.bank.domain.account.Money;
+import fr.bank.domain.account.Operation;
+import fr.bank.domain.account.StatementFormatter;
 
 import java.time.LocalDate;
 
 public class StatementEntry implements InformationProvider {
-  static final StatementEntryBuilder statementEntry = new StatementEntryBuilder();
+  public static final StatementEntryBuilder statementEntry = new StatementEntryBuilder();
   private final Operation operation;
   private final Money balanceOfAccountAfterOperation;
 
@@ -38,21 +43,21 @@ public class StatementEntry implements InformationProvider {
     return result;
   }
 
-  static class StatementEntryBuilder {
+  public static class StatementEntryBuilder {
     private Operation operation;
     private Money balanceOfAccountAfterOperation;
 
-    StatementEntryBuilder ofOperation(Operation operation) {
+    public StatementEntryBuilder ofOperation(Operation operation) {
       this.operation = operation;
       return this;
     }
 
-    StatementEntryBuilder withAccountBalanceAfter(Money balanceOfAccountAfterOperation) {
+    public StatementEntryBuilder withAccountBalanceAfter(Money balanceOfAccountAfterOperation) {
       this.balanceOfAccountAfterOperation = balanceOfAccountAfterOperation;
       return this;
     }
 
-    StatementEntry create() {
+    public StatementEntry create() {
       return new StatementEntry(operation, balanceOfAccountAfterOperation);
     }
   }
