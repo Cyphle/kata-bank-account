@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import static fr.bank.domain.account.Money.money;
 import static fr.bank.domain.account.Operation.operation;
 
-public class Account {
+public class Account implements InformationProvider {
   private static final Money MAXIMUM_OVERDRAFT = money.of(-400);
   private Money currentBalance;
   private final Statement statement;
@@ -22,8 +22,7 @@ public class Account {
   }
 
   public void deposit(Money amountToDeposit) throws NegativeAmountNotAllowedException {
-    if (amountToDeposit.isNegative())
-      throw new NegativeAmountNotAllowedException();
+    checkIsPositive(amountToDeposit);
 
     currentBalance = currentBalance.plus(amountToDeposit);
     statement.registerStatement(
@@ -34,8 +33,7 @@ public class Account {
   }
 
   public Money withdraw(Money amountToWithdraw) throws AllowedOverdraftExceededException, NegativeAmountNotAllowedException {
-    if (amountToWithdraw.isNegative())
-      throw new NegativeAmountNotAllowedException();
+    checkIsPositive(amountToWithdraw);
 
     if (currentBalance.minus(amountToWithdraw).isBelow(MAXIMUM_OVERDRAFT))
       throw new AllowedOverdraftExceededException();
@@ -49,7 +47,13 @@ public class Account {
     return amountToWithdraw;
   }
 
+  @Override
   public void giveStatementInformationTo(StatementFormatter statementFormatter) {
-    statement.giveStatementEntriesInformationTo(statementFormatter);
+    statement.giveStatementInformationTo(statementFormatter);
+  }
+
+  private void checkIsPositive(Money amountToDeposit) throws NegativeAmountNotAllowedException {
+    if (amountToDeposit.isNegative())
+      throw new NegativeAmountNotAllowedException();
   }
 }
