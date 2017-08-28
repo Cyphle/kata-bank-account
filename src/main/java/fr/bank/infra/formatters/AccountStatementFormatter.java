@@ -17,8 +17,7 @@ public class AccountStatementFormatter implements StatementFormatter {
   }
 
   public List<String> getStatementEntries() {
-    Collections.reverse(statements);
-    return statements;
+    return Collections.unmodifiableList(statements);
   }
 
   @Override

@@ -11,7 +11,7 @@ public class Money {
     this.amount = amount;
   }
 
-  BigDecimal getAmount() {
+  public BigDecimal getAmount() {
     return amount;
   }
 

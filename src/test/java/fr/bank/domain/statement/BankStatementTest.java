@@ -1,30 +1,40 @@
-package fr.bank.domain.account;
+package fr.bank.domain.statement;
 
 import fr.bank.domain.date.DateService;
-import fr.bank.utils.FakeBankDateService;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.LocalDate;
 
 import static fr.bank.domain.account.Money.money;
 import static fr.bank.domain.account.Operation.operation;
-import static fr.bank.domain.account.StatementEntry.statementEntry;
+import static fr.bank.domain.statement.StatementEntry.statementEntry;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 
+@RunWith(MockitoJUnitRunner.class)
 public class BankStatementTest {
+  @Mock
+  private DateService dateService;
   private BankStatement bankStatement;
-  private DateService bankDateService;
 
   @Before
   public void setUp() throws Exception {
-    bankDateService = new FakeBankDateService();
     bankStatement = new BankStatement();
+    given(dateService.dateOfToday()).willReturn(LocalDate.of(2017, 8, 24));
   }
 
   @Test
   public void should_add_a_statement_entry_for_a_deposit() throws Exception {
-    bankStatement.registerStatement(new Operation(bankDateService.dateOfToday(), money.of(100)), money.of(100));
+    bankStatement.registerStatement(
+            operation
+                    .atDate(dateService.dateOfToday())
+                    .ofAmount(money.of(100))
+                    .create(),
+            money.of(100));
     assertThat(bankStatement.statements).containsExactly(
             statementEntry.ofOperation(operation
                     .atDate(LocalDate.of(2017, 8, 24))
