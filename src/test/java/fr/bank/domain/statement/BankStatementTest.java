@@ -24,12 +24,12 @@ public class BankStatementTest {
   @Before
   public void setUp() throws Exception {
     bankStatement = new BankStatement();
-    given(dateService.dateOfToday()).willReturn(LocalDate.of(2017, 8, 24));
   }
 
   @Test
   public void should_add_a_statement_entry_for_a_deposit() throws Exception {
-    bankStatement.registerStatement(
+    given(dateService.dateOfToday()).willReturn(LocalDate.of(2017, 8, 24));
+    bankStatement.registerStatementEntry(
             operation
                     .atDate(dateService.dateOfToday())
                     .ofAmount(money.of(100))
@@ -40,5 +40,24 @@ public class BankStatementTest {
                     .atDate(LocalDate.of(2017, 8, 24))
                     .ofAmount(money.of(100))
                     .create()).withAccountBalanceAfter(money.of(100)).create());
+  }
+
+  @Test
+  public void should_get_latest_operation_account_balance() throws Exception {
+    given(dateService.dateOfToday()).willReturn(
+            LocalDate.of(2017, 8, 21),
+            LocalDate.of(2017, 8, 22),
+            LocalDate.of(2017, 8, 24));
+    bankStatement.registerStatementEntry(
+            operation.atDate(dateService.dateOfToday()).ofAmount(money.of(100)).create(),
+            money.of(100));
+    bankStatement.registerStatementEntry(
+            operation.atDate(dateService.dateOfToday()).ofAmount(money.of(-50)).create(),
+            money.of(50));
+    bankStatement.registerStatementEntry(
+            operation.atDate(dateService.dateOfToday()).ofAmount(money.of(200)).create(),
+            money.of(250));
+
+    assertThat(bankStatement.getLastBalance()).isEqualTo(money.of(250));
   }
 }

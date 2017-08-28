@@ -1,6 +1,6 @@
 package fr.bank.infra.printer;
 
-import fr.bank.domain.account.Account;
+import fr.bank.domain.account.AccountImpl;
 import fr.bank.domain.account.Statement;
 import fr.bank.domain.date.DateService;
 import fr.bank.domain.statement.BankStatement;
@@ -21,13 +21,13 @@ import static org.mockito.BDDMockito.given;
 public class AccountStatementFormatterTest {
   @Mock
   private DateService dateService;
-  private Account account;
+  private AccountImpl account;
   private AccountStatementFormatter accountFormatter;
 
   @Before
   public void setUp() throws Exception {
     Statement bankStatement = new BankStatement();
-    account = new Account(bankStatement, dateService);
+    account = new AccountImpl(bankStatement, dateService);
     accountFormatter = new AccountStatementFormatter();
     given(dateService.dateOfToday()).willReturn(LocalDate.of(2017, 8, 24));
   }
