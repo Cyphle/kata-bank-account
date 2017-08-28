@@ -11,39 +11,37 @@ import static fr.bank.domain.account.Operation.operation;
 
 public class Account implements InformationProvider {
   private static final Money MAXIMUM_OVERDRAFT = money.of(-400);
-  private Money currentBalance;
   private final Statement statement;
   private final DateService dateService;
 
   public Account(Statement statement, DateService dateService) {
     this.statement = statement;
     this.dateService = dateService;
-    currentBalance = money.of(0);
   }
 
   public void deposit(Money amountToDeposit) throws NegativeAmountNotAllowedException {
     checkIsPositive(amountToDeposit);
 
-    currentBalance = currentBalance.plus(amountToDeposit);
-    statement.registerStatement(
+    Money balance = statement.getLastBalance().plus(amountToDeposit);
+    statement.registerStatementEntry(
             operation.atDate(dateService.dateOfToday())
                     .ofAmount(amountToDeposit)
                     .create(),
-            currentBalance);
+            balance);
   }
 
   public Money withdraw(Money amountToWithdraw) throws AllowedOverdraftExceededException, NegativeAmountNotAllowedException {
     checkIsPositive(amountToWithdraw);
 
-    if (currentBalance.minus(amountToWithdraw).isBelow(MAXIMUM_OVERDRAFT))
+    if (statement.getLastBalance().minus(amountToWithdraw).isBelow(MAXIMUM_OVERDRAFT))
       throw new AllowedOverdraftExceededException();
 
-    currentBalance = currentBalance.minus(amountToWithdraw);
-    statement.registerStatement(
+    Money balance = statement.getLastBalance().minus(amountToWithdraw);
+    statement.registerStatementEntry(
             operation.atDate(dateService.dateOfToday())
                     .ofAmount(amountToWithdraw.multiplyBy(new BigDecimal(-1)))
                     .create(),
-            currentBalance);
+            balance);
     return amountToWithdraw;
   }
 

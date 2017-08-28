@@ -1,5 +1,7 @@
 package fr.bank.domain.account;
 
 public interface Statement extends InformationProvider {
-  void registerStatement(Operation operation, Money balanceOfAccountAfterOperation);
+  void registerStatementEntry(Operation operation, Money balanceOfAccountAfterOperation);
+
+  Money getLastBalance();
 }

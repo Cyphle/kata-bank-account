@@ -21,6 +21,10 @@ public class StatementEntry implements InformationProvider {
     return operation.getOperationDate();
   }
 
+  public Money getBalanceAfterOperation() {
+    return balanceOfAccountAfterOperation;
+  }
+
   @Override
   public void giveStatementInformationTo(StatementFormatter statementFormatter) {
     statementFormatter.addStatementEntry(operation.getOperationDate(), operation.getAmount(), balanceOfAccountAfterOperation.getAmount());
