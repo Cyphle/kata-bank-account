@@ -1,5 +1,7 @@
 package fr.bank.domain.account;
 
+import java.time.LocalDate;
+
 public class StatementEntry {
   static final StatementEntryBuilder statementEntry = new StatementEntryBuilder();
   private final Operation operation;
@@ -12,6 +14,10 @@ public class StatementEntry {
 
   void giveStatementEntryInformationTo(StatementFormatter statementFormatter) {
     statementFormatter.addStatementEntry(operation.getOperationDate(), operation.getAmount(), balanceOfAccountAfterOperation.getAmount());
+  }
+
+  public LocalDate getOperationDate() {
+    return operation.getOperationDate();
   }
 
   @Override

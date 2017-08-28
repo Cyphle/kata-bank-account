@@ -2,6 +2,7 @@ package fr.bank.domain.account;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static fr.bank.domain.account.StatementEntry.statementEntry;
 
@@ -19,7 +20,11 @@ public class BankStatement implements Statement {
 
   @Override
   public void giveStatementEntriesInformationTo(StatementFormatter statementFormatter) {
-    for (StatementEntry entry : statements)
+    List<StatementEntry> sortedStatements = statements
+            .stream()
+            .sorted((entryOne, entryTwo) -> entryTwo.getOperationDate().compareTo(entryOne.getOperationDate()))
+            .collect(Collectors.toList());
+    for (StatementEntry entry : sortedStatements)
       entry.giveStatementEntryInformationTo(statementFormatter);
   }
 }
