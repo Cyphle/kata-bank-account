@@ -27,7 +27,4 @@ Think of your personal bank account experience When in doubt, go for the simples
     - I want to see the history. (operation, date, amount, balance)  of my operations
         - Each operation has a date, an amount and the account balance after the operation
     - In order to check my operations
-    
-## Tests
-
-Test that tests deposit, withdrawal and history print is in : ConsolePrintHistoryTest
+   
