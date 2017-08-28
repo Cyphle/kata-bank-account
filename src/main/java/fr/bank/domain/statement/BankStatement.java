@@ -7,8 +7,10 @@ import fr.bank.domain.account.StatementFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static fr.bank.domain.account.Money.money;
 import static fr.bank.domain.statement.StatementEntry.statementEntry;
 
 public class BankStatement implements Statement {
@@ -19,8 +21,18 @@ public class BankStatement implements Statement {
   }
 
   @Override
-  public void registerStatement(Operation operation, Money balanceOfAccountAfterOperation) {
+  public void registerStatementEntry(Operation operation, Money balanceOfAccountAfterOperation) {
     statements.add(statementEntry.ofOperation(operation).withAccountBalanceAfter(balanceOfAccountAfterOperation).create());
+  }
+
+  @Override
+  public Money getLastBalance() {
+    Optional<StatementEntry> lastEntry = statements.stream()
+            .sorted((entryOne, entryTwo) -> entryTwo.getOperationDate().compareTo(entryOne.getOperationDate()))
+            .findAny();
+    if (lastEntry.isPresent())
+      return lastEntry.get().getBalanceAfterOperation();
+    return money.of(0);
   }
 
   @Override

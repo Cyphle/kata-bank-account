@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import static fr.bank.domain.account.Money.money;
 import static fr.bank.domain.account.Operation.operation;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -27,7 +28,7 @@ public class AccountTest {
 
   @Before
   public void setUp() throws Exception {
-    account = new Account(bankStatement, bankDateService);
+    account = new AccountImpl(bankStatement, bankDateService);
     Mockito.doReturn(LocalDate.of(2017, 8, 24)).when(bankDateService).dateOfToday();
   }
 
@@ -38,6 +39,7 @@ public class AccountTest {
 
   @Test(expected = AllowedOverdraftExceededException.class)
   public void should_not_withdraw_when_overdraft_is_exceeded() throws Exception {
+    given(bankStatement.getLastBalance()).willReturn(money.of(0));
     account.withdraw(money.of(401));
   }
 
@@ -48,9 +50,10 @@ public class AccountTest {
 
   @Test
   public void should_add_a_deposit_statement_entry_when_doing_a_deposit() throws Exception {
+    given(bankStatement.getLastBalance()).willReturn(money.of(0));
     account.deposit(money.of(100));
 
-    verify(bankStatement).registerStatement(
+    verify(bankStatement).registerStatementEntry(
             operation
                     .atDate(LocalDate.of(2017, 8, 24))
                     .ofAmount(money.of(100))
@@ -60,10 +63,11 @@ public class AccountTest {
 
   @Test
   public void should_add_two_deposit_statement_entries_when_doing_two_deposits() throws Exception {
+    given(bankStatement.getLastBalance()).willReturn(money.of(0), money.of(100));
     account.deposit(money.of(100));
     account.deposit(money.of(200));
 
-    verify(bankStatement).registerStatement(
+    verify(bankStatement).registerStatementEntry(
             operation
                     .atDate(LocalDate.of(2017, 8, 24))
                     .ofAmount(money.of(200))
@@ -73,10 +77,11 @@ public class AccountTest {
 
   @Test
   public void should_add_a_withdrawal_statement_entry_when_doing_a_withdrawal() throws Exception {
+    given(bankStatement.getLastBalance()).willReturn(money.of(0), money.of(100));
     account.deposit(money.of(100));
 
     assertThat(account.withdraw(money.of(50))).isEqualTo(money.of(50));
-    verify(bankStatement).registerStatement(
+    verify(bankStatement).registerStatementEntry(
             operation
                     .atDate(LocalDate.of(2017, 8, 24))
                     .ofAmount(money.of(-50))
@@ -86,11 +91,12 @@ public class AccountTest {
 
   @Test
   public void should_add_two_withdrawal_statement_entries_when_doing_two_withdrawal() throws Exception {
+    given(bankStatement.getLastBalance()).willReturn(money.of(0), money.of(100), money.of(50));
     account.deposit(money.of(100));
 
     assertThat(account.withdraw(money.of(50))).isEqualTo(money.of(50));
     assertThat(account.withdraw(money.of(20))).isEqualTo(money.of(20));
-    verify(bankStatement).registerStatement(
+    verify(bankStatement).registerStatementEntry(
             operation
                     .atDate(LocalDate.of(2017, 8, 24))
                     .ofAmount(money.of(-20))
