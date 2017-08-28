@@ -22,8 +22,7 @@ public class Account {
   }
 
   public void deposit(Money amountToDeposit) throws NegativeAmountNotAllowedException {
-    if (amountToDeposit.isNegative())
-      throw new NegativeAmountNotAllowedException();
+    checkIsPositive(amountToDeposit);
 
     currentBalance = currentBalance.plus(amountToDeposit);
     statement.registerStatement(
@@ -34,8 +33,7 @@ public class Account {
   }
 
   public Money withdraw(Money amountToWithdraw) throws AllowedOverdraftExceededException, NegativeAmountNotAllowedException {
-    if (amountToWithdraw.isNegative())
-      throw new NegativeAmountNotAllowedException();
+    checkIsPositive(amountToWithdraw);
 
     if (currentBalance.minus(amountToWithdraw).isBelow(MAXIMUM_OVERDRAFT))
       throw new AllowedOverdraftExceededException();
@@ -51,5 +49,10 @@ public class Account {
 
   public void giveStatementInformationTo(StatementFormatter statementFormatter) {
     statement.giveStatementEntriesInformationTo(statementFormatter);
+  }
+
+  private void checkIsPositive(Money amountToDeposit) throws NegativeAmountNotAllowedException {
+    if (amountToDeposit.isNegative())
+      throw new NegativeAmountNotAllowedException();
   }
 }
